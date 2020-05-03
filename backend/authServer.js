@@ -33,7 +33,7 @@ client.connect(err => {
       });
       console.log('ERROR: No password has been provided');
     }
-    db.collection('Ateam')
+    db.collection('finalUserInfo')
       .findOne({
         userId: req.body.userId
       }, function(err, result){
@@ -50,7 +50,7 @@ client.connect(err => {
         } else {
           console.log('No results. Creating a new user...');
           var newUser = {userId: req.body.userId, password: req.body.password};
-          db.collection('Ateam').insertOne(newUser, function(err, res) {
+          db.collection('finalUserInfo').insertOne(newUser, function(err, res) {
             if(err){
               console.log(err);
             }
@@ -72,7 +72,7 @@ client.connect(err => {
         valid: false
       });
     }
-    db.collection('Ateam')
+    db.collection('finalUserInfo')
       .findOne({
         userId: req.body.userId
       })
