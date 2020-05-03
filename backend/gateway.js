@@ -2,17 +2,19 @@ const express = require('express');
 const httpProxy = require('http-proxy');
 const app = express();
 const redis = require('redis');
-const client = redis.createClient();
+//const client = redis.createClient();
 const port = process.env.PORT || 3004;
 
 const apiProxy = httpProxy.createProxyServer();
 
 // Function to increment counter in redis 
+/*
 function incrCounter() {
   client.incr('myCounter', (err, updatedValue) => {
     if(err) console.log(err);
   });
 }
+*/
 
 apiProxy.on('error', (err, req, res) => {
   console.log(err)
@@ -20,14 +22,14 @@ apiProxy.on('error', (err, req, res) => {
 });
 
 app.all('/api/auth/authenticate', (req, res) => {
-  incrCounter();
+  //incrCounter();
   apiProxy.web(req, res, {
     target: 'http://localhost:3001',
   });
 });
 
 app.all('/api/auth/create', (req, res) => {
-  incrCounter();
+  //incrCounter();
   apiProxy.web(req, res, {
     target: 'http://localhost:3001',
   });
