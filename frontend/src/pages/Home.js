@@ -5,41 +5,41 @@ import ItemGrid from './ItemGrid';
 
 
 const Home = ({
-  isLoggedIn,
-  user,
-  receipt,
-  receipts,
-  dispatch,
+	isLoggedIn,
+	user,
+	receipt,
+	receipts,
+	dispatch,
 }) => { // step 4 pass props in to component
-  return (
-    <div>
-      <h2>Shop</h2>
-      {isLoggedIn && (
-        <div>
-          <div id="topContainer">
-            <div id="topLeftContainer">
-              <p className="welcomeTitle">
-                {`Welcome ${user}!`}
-              </p>
-            </div>
-            <div id="topRightContainer">
-              <button id="logout" onClick={() => dispatch(logout())}>Logout</button>
-              <br />
-            </div>
-          </div>
-          <ItemGrid />
-        </div>
-      )}
-      {!isLoggedIn && (<p> Please Log in or Sign up</p>)}
-    </div>
-  );
+	return (
+		<div>
+			<h2>Shop</h2>
+			{isLoggedIn && (
+				<div>
+					<div id="topContainer">
+						<div id="topLeftContainer">
+							<p className="welcomeTitle">
+								{`Welcome ${user}!`}
+							</p>
+						</div>
+						<div id="topRightContainer">
+							<button id="logout" onClick={() => dispatch(logout())}>Logout</button>
+							<br />
+						</div>
+					</div>
+				</div>
+			)}
+			{!isLoggedIn && (<p> Please Log in or Sign up</p>)}
+			<ItemGrid />
+		</div>
+	);
 };
 
 // Step 2 create mapping function
 const mapStateToProps = state => ({
-  isLoggedIn: state.userReducer.isLoggedIn,
-  user: state.userReducer.user,
-  password: state.userReducer.password,
+	isLoggedIn: state.userReducer.isLoggedIn,
+	user: state.userReducer.user,
+	password: state.userReducer.password,
 });
 
 // step 3 connect mapping function to component
