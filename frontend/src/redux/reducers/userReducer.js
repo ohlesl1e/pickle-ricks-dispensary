@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
     user: 'default',
     password: '',
-    isLoggedIn: false,
+    isLoggedIn: true,
     loadingState: 'init',
     stats: '',
   };

@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux'; // step 1
 import { logout } from '../redux/actions/userActions';
+import ItemGrid from './ItemGrid';
 
 
-const Home = ({ 
-  isLoggedIn, 
+const Home = ({
+  isLoggedIn,
   user,
   receipt,
   receipts,
-  dispatch, 
+  dispatch,
 }) => { // step 4 pass props in to component
   return (
     <div>
@@ -18,17 +19,18 @@ const Home = ({
           <div id="topContainer">
             <div id="topLeftContainer">
               <p className="welcomeTitle">
-              {`Welcome ${user}!`} 
+                {`Welcome ${user}!`}
               </p>
             </div>
             <div id="topRightContainer">
               <button id="logout" onClick={() => dispatch(logout())}>Logout</button>
-              <br/>
+              <br />
             </div>
-          </div>      
+          </div>
+          <ItemGrid />
         </div>
       )}
-      {!isLoggedIn && ( <p> Please Log in or Sign up</p>)}
+      {!isLoggedIn && (<p> Please Log in or Sign up</p>)}
     </div>
   );
 };
