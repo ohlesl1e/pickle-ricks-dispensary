@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import {
   setUser,
   setPassword,
-  setIsLoggedIn,
-  setLoadingState,
   login,
 } from '../redux/actions/userActions';
 import { Redirect } from 'react-router-dom';
