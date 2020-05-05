@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'; // step 1
 import ItemGrid from './ItemGrid';
+import { getInventory } from '../redux/actions/inventoryAction';
 
 
 const Home = ({
@@ -9,7 +10,8 @@ const Home = ({
 	receipt,
 	receipts,
 	dispatch,
-}) => { // step 4 pass props in to component
+}) => { 
+	dispatch(getInventory());
 	return (
 		<div>
 			<h2>Shop</h2>
