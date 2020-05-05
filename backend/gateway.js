@@ -42,6 +42,11 @@ app.all('/api/stats/get', (req, res) => {
   });
 });
 
+app.all('/api/inventory/get', (req, res) => {
+  apiProxy.web(req,res, {
+    target : 'http://localhost:3005',
+  });
+});
 
 app.all("*", (req, res) => {
   // front end server / react
