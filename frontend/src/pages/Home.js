@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux'; // step 1
-import { logout } from '../redux/actions/userActions';
 import ItemGrid from './ItemGrid';
 
 
@@ -21,10 +20,6 @@ const Home = ({
 							<p className="welcomeTitle">
 								{`Welcome ${user}!`}
 							</p>
-						</div>
-						<div id="topRightContainer">
-							<button id="logout" onClick={() => dispatch(logout())}>Logout</button>
-							<br />
 						</div>
 					</div>
 				</div>
