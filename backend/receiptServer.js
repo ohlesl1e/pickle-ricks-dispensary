@@ -19,7 +19,7 @@ client.connect(err => {
     console.log(err);
     process.exit(1);
   }
-  console.log("connected to db");
+ 
 
 const db=client.db(dbName);
 
@@ -62,6 +62,7 @@ app.post('/api/receipts/create',(req,res)=>{
              .then(
                  res.send('Receipt saved')
             )
+            
              .catch(e=>{
                res.status(404).send('error404');
              }
