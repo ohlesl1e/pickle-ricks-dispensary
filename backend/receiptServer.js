@@ -1,7 +1,7 @@
 const express = require('express');
 const { MongoClient, ObjectID } = require('mongodb');
 const app = express();
-const port = 3005;
+const port = 3006;
 
 
 var bodyParser = require('body-parser');

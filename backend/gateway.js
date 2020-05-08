@@ -48,6 +48,18 @@ app.all('/api/inventory/get', (req, res) => {
   });
 });
 
+app.all('/api/receipts/create', (req, res) => {
+  apiProxy.web(req,res ,{
+    target: 'http://localhost:3006',
+  });
+});
+
+app.all('/api/receipts/get', (req, res) => {
+  apiProxy.web(req,res ,{
+    target: 'http://localhost:3006',
+  });
+});
+
 app.all("*", (req, res) => {
   // front end server / react
   apiProxy.web(req, res, {
