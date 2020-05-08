@@ -1,7 +1,7 @@
 const express = require('express');
 const KafkaProducer = require('./KafkaProducer.js');
 const producer = new KafkaProducer('email');
-const { MongoClient, ObjectID } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const app = express();
 const port = 3005;
 
@@ -65,12 +65,11 @@ app.post('/api/receipts/create',(req,res)=>{
               
               console.log('Email of the receipt will be sent');
               producer.send(receipt);
-                 res.send('Receipt saved');
+              res.send('Receipt saved');
                
              }
             )
-            
-             .catch(e=>{
+              .catch(e=>{
                res.status(404).send('error404');
              }
              ) 
