@@ -3,7 +3,7 @@ const KafkaProducer = require('./KafkaProducer.js');
 const producer = new KafkaProducer('email');
 const { MongoClient } = require('mongodb');
 const app = express();
-const port = 3005;
+const port = 3006;
 
 
 var bodyParser = require('body-parser');
