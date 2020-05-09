@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 import Item from './pages/Item';
 import { logout } from './redux/actions/userActions';
 import Cart from './pages/Cart';
+import History from './pages/Purchasehistory';
 
 const App = ({ isLoggedIn, dispatch }) => {
   return (
@@ -34,6 +35,9 @@ const App = ({ isLoggedIn, dispatch }) => {
                 </li>
               </span>)
             }
+          <li className='nav-item'>
+              <Link to='/purchasehistory' className='nav-link'>History</Link>
+            </li>
           </ul>
         </div>
       </nav>
