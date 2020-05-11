@@ -10,7 +10,7 @@ app.post('/mail/sendemail', (req, res) => {
         port: 465,
         secure: true,
         auth: {
-            user: '',
+            user: 'picklerickcsc667@gmail.com',
             pass: '',
         }
     })
@@ -18,7 +18,7 @@ app.post('/mail/sendemail', (req, res) => {
     let mailOptions = {
         from: {
             name: 'Pickle Rick',
-            address: '',
+            address: 'picklerickcsc667@gmail.com',
         },
         to: req.body.email,
         replyTo: '',
