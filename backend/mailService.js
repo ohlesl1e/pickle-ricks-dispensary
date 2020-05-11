@@ -1,16 +1,17 @@
 const nodemailer = require('nodemailer')
-const express = require('express')
-const app = express()
-const port = 3006;
-app.use(express.json())
 
-app.post('/mail/sendemail', (req, res) => {
+const KafkaConsumer = require('./KafkaConsumer');
+
+const consumer = new KafkaConsumer(['email']);
+
+consumer.on('message', (message) => {
+
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
         auth: {
-            user: '',
+            user: 'picklerickcsc667@gmail.com',
             pass: '',
         }
     })
@@ -20,11 +21,11 @@ app.post('/mail/sendemail', (req, res) => {
             name: 'Pickle Rick',
             address: '',
         },
-        to: req.body.email,
+        to: 'dpolozov@gmail.com',
         replyTo: '',
         subject: 'Thank You for Your Order',
-        text: req.body.message,
-        html: `<p>${req.body.message}</p>`,
+        text: 'message',
+        html: `<p>'soemthing'</p>`,
     }
     
     transporter.sendMail(mailOptions, (err, info) =>{
@@ -33,6 +34,7 @@ app.post('/mail/sendemail', (req, res) => {
 		}
 		res.send(info)
 	})
-})
 
-app.listen(port, () => console.log(`email service listening on port ${port}!`))
+});
+
+consumer.connect();
