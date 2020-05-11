@@ -15,6 +15,24 @@ const dbClient = new MongoClient(url);
 
 var Cookie = require("tiny-cookie");
 
+var redisClient = redis.createClient(6379, "127.0.0.1");
+var RedisStore = require("connect-redis")(session);
+var session = require("express-session");
+
+app.use(
+  session({
+    store: new RedisStore({ client: redisClient }),
+    secret: "gBpwmwE0PmyDKPuLhhmY8CONJQW3TnCujQuoE8nVao",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
+
+redisClient.on("error", function (err) {
+  console.log(" Error " + err);
+});
+
 var VueCookie = {
   install: function (Vue) {
     Vue.prototype.$cookie = this;
