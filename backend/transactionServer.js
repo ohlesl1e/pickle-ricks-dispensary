@@ -1,5 +1,7 @@
 const express = require('express');
-const { MongoClient, ObjectID } = require('mongodb');
+const KafkaProducer = require('./KafkaProducer.js');
+const producer = new KafkaProducer('email');
+const { MongoClient } = require('mongodb');
 const app = express();
 const port = 3006;
 
@@ -59,11 +61,15 @@ app.post('/api/receipts/create',(req,res)=>{
                     $push: { "receipts":receipt}
                 }
                 )
-             .then(
-                 res.send('Receipt saved')
+             .then(()=>{
+              
+              console.log('Email of the receipt will be sent');
+              producer.send(receipt);
+              res.send('Receipt saved');
+               
+             }
             )
-            
-             .catch(e=>{
+              .catch(e=>{
                res.status(404).send('error404');
              }
              ) 
@@ -76,8 +82,10 @@ app.post('/api/receipts/create',(req,res)=>{
                     $set: { "receipts":receipt}
                 }
                 )
-             .then(doc =>{
-                 res.send('Receipt saved');
+             .then(() =>{
+              console.log('Email of the receipt will be sent');
+              producer.send(receipt);
+              res.send('Receipt saved');               
              })
              .catch(e=>{
                res.status(404).send('error');
@@ -88,5 +96,7 @@ app.post('/api/receipts/create',(req,res)=>{
    
 });
 
-  app.listen(port, () => console.log(` Listening on port ${port}!`));
+producer.connect(() => {
+  app.listen(port);
+   });
 });

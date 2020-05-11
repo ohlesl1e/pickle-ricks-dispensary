@@ -60,6 +60,12 @@ app.all('/api/receipts/get', (req, res) => {
   });
 });
 
+app.all('/mail/sendemail', (req, res) => {
+  apiProxy.web(req, res , {
+    target: 'http"//localhost:3007',
+  });
+});
+
 app.all("*", (req, res) => {
   // front end server / react
   apiProxy.web(req, res, {
