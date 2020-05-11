@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 import Item from './pages/Item';
 import { logout } from './redux/actions/userActions';
 import Cart from './pages/Cart';
+import History from './pages/History';
 
 const App = ({ isLoggedIn, dispatch }) => {
   return (
@@ -21,6 +22,7 @@ const App = ({ isLoggedIn, dispatch }) => {
             <li className='nav-item'>
               <Link to='/cart' className='nav-link'>Cart</Link>
             </li>
+           
             {isLoggedIn ?
               (<li className='nav-item'>
                 <Link id="logout" className='nav-link' onClick={() => dispatch(logout())}>Logout</Link>
@@ -34,15 +36,22 @@ const App = ({ isLoggedIn, dispatch }) => {
                 </li>
               </span>)
             }
+            <li className='nav-item'>
+              <Link to='/history' className='nav-link'>History</Link>
+            
+            </li>
+         
           </ul>
         </div>
       </nav>
       <Switch>
+        <Route path="/History" component={History} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path='/item' component={Item} />
         <Route path='/cart' component={Cart} />
         <Route path="/" component={Home} />
+      
       </Switch>
     </div>
   );
