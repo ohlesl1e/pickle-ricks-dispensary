@@ -19,7 +19,7 @@ consumer.on('message', (message) => {
     let mailOptions = {
         from: {
             name: 'Pickle Rick',
-            address: '',
+            address: 'picklerickcsc667@gmail.com',
         },
         to: 'dpolozov@gmail.com',
         replyTo: '',
