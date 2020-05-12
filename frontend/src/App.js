@@ -8,50 +8,31 @@ import Signup from './pages/Signup';
 import Item from './pages/Item';
 import { logout } from './redux/actions/userActions';
 import Cart from './pages/Cart';
-import History from './pages/History';
+import History from './pages/Purchasehistory';
+
 
 const App = ({ isLoggedIn, dispatch }) => {
   return (
     <div className="App">
-      <nav className='navbar navbar-expand-sm bg-light'>
-        <div className='container'>
-          <ul className="navbar-nav">
-            <li className='nav-item'>
-              <Link to="/" className='nav-link'>Home</Link>
-            </li>
-            <li className='nav-item'>
-              <Link to='/cart' className='nav-link'>Cart</Link>
-            </li>
-           
-            {isLoggedIn ?
-              (<li className='nav-item'>
-                <Link id="logout" className='nav-link' onClick={() => dispatch(logout())}>Logout</Link>
-              </li>) :
-              (<span>
-                <li className='nav-item' style={{ display: 'inline-block' }}>
-                  <Link to="/login" className='nav-link'>Login</Link>
-                </li>
-                <li className='nav-item' style={{ display: 'inline-block' }}>
-                  <Link to="/signup" className='nav-link'>Sign up</Link>
-                </li>
-              </span>)
-            }
-            <li className='nav-item'>
-              <Link to='/history' className='nav-link'>History</Link>
-            
-            </li>
-         
+      <nav className='nav-bar'>
+        <div className="nav-wrapper">
+          <a href="#" class="brand-logo">Home</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+            <li><input type='text'className='search' placeholder='Search'/></li>
+            <li><a href="sass.html">Login</a></li>
+            <li><a href="badges.html">Signup</a></li>
+            <li><a href="collapsible.html"><i class="fas fa-shopping-cart"></i></a></li>
           </ul>
         </div>
       </nav>
+
       <Switch>
-        <Route path="/History" component={History} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path='/item' component={Item} />
         <Route path='/cart' component={Cart} />
         <Route path="/" component={Home} />
-      
       </Switch>
     </div>
   );
