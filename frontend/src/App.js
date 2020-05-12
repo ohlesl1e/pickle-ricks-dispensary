@@ -16,13 +16,14 @@ const App = ({ isLoggedIn, dispatch }) => {
     <div className="App">
       <nav className='nav-bar'>
         <div className="nav-wrapper">
-          <a href="#" class="brand-logo">Home</a>
+        <Link to="/" className='nav-brand-logo'>Home</Link>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
 
             <li><input type='text'className='search' placeholder='Search'/></li>
-            <li><a href="sass.html">Login</a></li>
-            <li><a href="badges.html">Signup</a></li>
-            <li><a href="collapsible.html"><i class="fas fa-shopping-cart"></i></a></li>
+            <li>   <Link to="/login">Login</Link></li>
+
+            <li><Link to="/signup">Sign up</Link>></li>
+            <li><Link to="/cart"><i class="fas fa-shopping-cart"></i></Link></li>
           </ul>
         </div>
       </nav>
