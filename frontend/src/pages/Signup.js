@@ -32,7 +32,7 @@ const Signup = ({
         {/* this is a comment */}
         Username: {" "} {" "}
         <input type="email" placeholder='Valid email address'
-          value={user}
+          value={email}
           onChange={e => dispatch(setEmail(e.target.value))}
         />
       </div><br/>
@@ -55,6 +55,7 @@ const Signup = ({
       </div><br/>
       <div>
         {loadingState === 'error' && <b>User name already exists</b>}
+        {loadingState == 'Not' && <b> enter a valid email- address </b>}
         <button id="signup" onClick={() => dispatch(create())}>Sign up</button>
       </div>
     </div>

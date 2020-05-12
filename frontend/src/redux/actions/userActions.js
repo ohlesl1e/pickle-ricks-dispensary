@@ -40,13 +40,13 @@ export const login = () => (dispatch, getState) => {
 	//console.log(reduxEvent);
 	// in order for redux to know something happened
 	dispatch(reduxEvent); // now redux knows something is happening
-	const userName = getState().userReducer.user;
+	const userName = getState().userReducer.email;
 	const userPassword = getState().userReducer.password;
 	const url = '/api/auth/authenticate';
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ userId: userName, password: userPassword }),
+		body: JSON.stringify({ email: userName, password: userPassword }),
 	}
 	fetch(url, requestOptions)
 		.then(res => res.json())
@@ -66,6 +66,7 @@ export const logout = () => (dispatch, getState) => {
 	dispatch(setIsLoggedIn(false));
 	dispatch(setUser(''));
 	dispatch(setPassword(''));
+	dispatch(setEmail(''));
 	dispatch(setReceipts([]));
 };
 
@@ -76,11 +77,16 @@ export const create = () => (dispatch, getState) => {
 	dispatch(reduxEvent); // now redux knows something is happening
 	const userName = getState().userReducer.user;
 	const userPassword = getState().userReducer.password;
+	const useremail= getState().userReducer.email;
+	if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(useremail)){
+	    dispatch(setLoadingState('Not'))
+	}
+	else{
 	const url = '/api/auth/create';
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ userId: userName, password: userPassword }),
+		body: JSON.stringify({ userId: userName, password: userPassword, email: useremail}),
 	}
 	fetch(url, requestOptions)
 		.then(res => res.json())
@@ -93,7 +99,7 @@ export const create = () => (dispatch, getState) => {
 			}
 		})
 		.catch(console.log);
-};
+}};
 
 export const getStats = () => (dispatch, getState) => {
 	const url = '/api/stats/get';
