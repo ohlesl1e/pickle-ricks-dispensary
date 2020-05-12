@@ -27,11 +27,8 @@ const Cart = ({ cart, dispatch }) => {
                                     </ListGroup.Item>
                                 )}
                             </ListGroup><br/>
-                            {/* <Button>Proceed to checkout</Button> */}
-                            <LinkButton
-                                to='/Checkout'
-                                >Proceed to checkout
-                            </LinkButton>
+                            <Button>Proceed to checkout</Button>
+                        
                         </div>)
                 }
             </Container>
