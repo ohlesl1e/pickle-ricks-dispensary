@@ -31,14 +31,14 @@ const Login = ({
       <div>
         {/* this is a comment */}
         UserName: {" "}
-        <input 
+        <input placeholder='email address'
           value={user}
           onChange={e => dispatch(setUser(e.target.value))}
         />
       </div><br/>
       <div>
         Password: {" "}
-        <input
+        <input placeholder='password'
           type="password"
           value={password}
           onChange={e => dispatch(setPassword(e.target.value))}

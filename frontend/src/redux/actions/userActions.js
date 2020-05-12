@@ -9,6 +9,10 @@ export const setPassword = password => ({
 	type: 'USER_SET_PASSWORD',
 	password,
 });
+export const setEmail = email =>({
+	type : 'USER_SET_EMAIL',
+	email,
+})
 
 export const setIsLoggedIn = isLoggedIn => ({
 	type: 'USER_SET_IS_LOGGED_IN',
