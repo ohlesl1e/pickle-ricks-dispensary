@@ -2,12 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { ListGroup, Container, Image, Button } from 'react-bootstrap'
 import { deleteFromCart } from '../redux/actions/userActions'
+import { Link } from 'react-router-dom'
 
 const Cart = ({ cart, dispatch }) => {
     return (
         <div>
             <br />
             <Container style={{ textAlign: "left" }}>
+                <Link className='btn btn-primary' to='/' style={{ marginBottom: '10px' }}>Back</Link>
                 <h2>Shopping Cart</h2>
                 {
                     (cart.length === 0) ?
@@ -28,7 +30,7 @@ const Cart = ({ cart, dispatch }) => {
                                             variant='secondary'
                                             style={{ float: 'right' }}
                                             onClick={() => dispatch(deleteFromCart(cartItem))}
-                                            >X</Button>
+                                        >X</Button>
                                     </ListGroup.Item>
                                 )}
                             </ListGroup><br />

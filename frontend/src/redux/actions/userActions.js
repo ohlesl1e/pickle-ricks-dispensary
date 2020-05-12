@@ -78,7 +78,8 @@ export const create = () => (dispatch, getState) => {
 		.then(res => res.json())
 		.then(data => {
 			if (data.valid) {
-				dispatch(setIsLoggedIn(true));
+				dispatch(setUser(''));
+				dispatch(setPassword(''));
 				dispatch(setLoadingState('init'));
 			} else {
 				dispatch(setLoadingState('error'));

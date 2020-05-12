@@ -8,35 +8,27 @@ import Signup from './pages/Signup';
 import Item from './pages/Item';
 import { logout } from './redux/actions/userActions';
 import Cart from './pages/Cart';
+import { Nav, Navbar } from 'react-bootstrap';
 
 const App = ({ isLoggedIn, dispatch }) => {
   return (
     <div className="App">
-      <nav className='navbar navbar-expand-sm bg-light'>
+      <Navbar variant='light' bg='light' expand='sm'>
         <div className='container'>
-          <ul className="navbar-nav">
-            <li className='nav-item'>
+          <Navbar.Toggle />
+          <Navbar.Collapse>
+            <Nav>
               <Link to="/" className='nav-link'>Home</Link>
-            </li>
-            <li className='nav-item'>
               <Link to='/cart' className='nav-link'>Cart</Link>
-            </li>
-            {isLoggedIn ?
-              (<li className='nav-item'>
-                <Link id="logout" className='nav-link' onClick={() => dispatch(logout())}>Logout</Link>
-              </li>) :
-              (<span>
-                <li className='nav-item' style={{ display: 'inline-block' }}>
-                  <Link to="/login" className='nav-link'>Login</Link>
-                </li>
-                <li className='nav-item' style={{ display: 'inline-block' }}>
-                  <Link to="/signup" className='nav-link'>Sign up</Link>
-                </li>
-              </span>)
-            }
-          </ul>
+              {isLoggedIn ?
+                <Link id="logout" className='nav-link' onClick={() => dispatch(logout())}>Logout</Link> :
+                (<Nav><Link to="/login" className='nav-link'>Login</Link>
+                  <Link to="/signup" className='nav-link'>Sign up</Link></Nav>)
+              }
+            </Nav>
+          </Navbar.Collapse>
         </div>
-      </nav>
+      </Navbar>
       <Switch>
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
