@@ -134,8 +134,16 @@ export const deleteFromCart = cartItem => (dispatch, getState) => {
 
 export const completeTransaction = () => (dispatch, getState) => {
 	console.log('called complete transactio function.')
-	const userName = getState().userReducer.user;
+	const email = getState().userReducer.email;
 	const url = '/api/receipts/create';
+	const cart = getState().userReducer.cart;
+	console.log(cart);
+	console.log(email);
+	const jsonCart = [];
+	cart.forEach(element => {
+		jsonCart.push({title : element.item.title , quantity : element.amount})
+	});
+	
 
 	const requestOptions = {
 		method: 'POST',
@@ -143,10 +151,11 @@ export const completeTransaction = () => (dispatch, getState) => {
 		body: JSON.stringify({receipt_id : '22',
 								date : Date.now(),
 								price: '$22.22',
-								items: "[{nothing}, {but}, {air}]"	,
-								userId: userName
+								items: jsonCart	,
+								email: email
 		})
 	}
+	
 
 	fetch(url, requestOptions)
 		.then(res => res.json())
@@ -154,6 +163,7 @@ export const completeTransaction = () => (dispatch, getState) => {
 			console.log(data);
 		})
 		.catch( (e) => {
-			console.log(e);
+			//console.log(e);
 		})
+		
 };
