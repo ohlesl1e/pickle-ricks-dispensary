@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { ListGroup, Container, Image, Button } from 'react-bootstrap'
 
 const Cart = ({ cart, dispatch }) => {
@@ -27,7 +28,13 @@ const Cart = ({ cart, dispatch }) => {
                                     </ListGroup.Item>
                                 )}
                             </ListGroup><br/>
-                            <Button>Check Out</Button>
+                            <Link 
+                                role="button"
+                                to="/checkout"> 
+                                Proceed to checkout
+                            </Link>
+                            {/* <Button>Proceed to checkout</Button> */}
+                        
                         </div>)
                 }
             </Container>
