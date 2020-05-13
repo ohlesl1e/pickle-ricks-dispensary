@@ -9,6 +9,9 @@ import Item from './pages/Item';
 import { logout } from './redux/actions/userActions';
 import Cart from './pages/Cart';
 import { Nav, Navbar } from 'react-bootstrap';
+import Checkout from './pages/Checkout';
+import History from './pages/History';
+
 
 const App = ({ isLoggedIn, dispatch }) => {
   return (
@@ -20,6 +23,7 @@ const App = ({ isLoggedIn, dispatch }) => {
             <Nav>
               <Link to="/" className='nav-link'>Home</Link>
               <Link to='/cart' className='nav-link'>Cart</Link>
+
               {isLoggedIn ?
                 <Link id="logout" className='nav-link' onClick={() => dispatch(logout())}>Logout</Link> :
                 (<Nav><Link to="/login" className='nav-link'>Login</Link>
@@ -30,11 +34,14 @@ const App = ({ isLoggedIn, dispatch }) => {
         </div>
       </Navbar>
       <Switch>
+        <Route path="/History" component={History} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path='/item' component={Item} />
         <Route path='/cart' component={Cart} />
+        <Route path='/checkout' component={Checkout} />
         <Route path="/" component={Home} />
+      
       </Switch>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { ListGroup, Container, Image, Button } from 'react-bootstrap'
 import { deleteFromCart } from '../redux/actions/userActions'
 import { Link } from 'react-router-dom'
@@ -33,8 +34,14 @@ const Cart = ({ cart, dispatch }) => {
                                         >X</Button>
                                     </ListGroup.Item>
                                 )}
-                            </ListGroup><br />
-                            <Button>Check Out</Button>
+
+                            </ListGroup><br/>
+                            <Link 
+                                role="button"
+                                to="/checkout"> 
+                                Proceed to checkout
+                            </Link>
+                            {/* <Button>Proceed to checkout</Button> */}
                         </div>)
                 }
             </Container>
