@@ -20,11 +20,6 @@ export const setLoadingState = loadingState => ({
 	loadingState,
 });
 
-export const setStats = stats => ({
-	type: 'USER_SET_CART',
-	stats,
-})
-
 export const setCart = cart => ({
 	type: 'USER_SET_CART',
 	cart,
@@ -63,6 +58,7 @@ export const logout = () => (dispatch, getState) => {
 	dispatch(setUser(''));
 	dispatch(setPassword(''));
 	dispatch(setReceipts([]));
+	dispatch(setCart([]))
 };
 
 export const create = () => (dispatch, getState) => {
@@ -82,7 +78,8 @@ export const create = () => (dispatch, getState) => {
 		.then(res => res.json())
 		.then(data => {
 			if (data.valid) {
-				dispatch(setIsLoggedIn(true));
+				dispatch(setUser(''));
+				dispatch(setPassword(''));
 				dispatch(setLoadingState('init'));
 			} else {
 				dispatch(setLoadingState('error'));
@@ -90,16 +87,6 @@ export const create = () => (dispatch, getState) => {
 		})
 		.catch(console.log);
 };
-
-export const getStats = () => (dispatch, getState) => {
-	const url = '/api/stats/get';
-	fetch(url)
-		.then(res => res.json())
-		.then(data => {
-			dispatch(setStats(data.visits));
-		})
-		.catch(console.log);
-}
 
 export const addToCart = amount => (dispatch, getState) => {
 	const cart = getState().userReducer.cart
@@ -126,3 +113,11 @@ export const addToCart = amount => (dispatch, getState) => {
 	dispatch(setCart(cart))
 }
 
+export const deleteFromCart = cartItem => (dispatch, getState) => {
+	const cart = getState().userReducer.cart
+	const index = cart.findIndex(value => {
+		return value.item._id === cartItem.item._id
+	})
+	console.log(cartItem);
+	dispatch(setCart(cart.slice(0, index).concat(cart.slice(index + 1))))
+}

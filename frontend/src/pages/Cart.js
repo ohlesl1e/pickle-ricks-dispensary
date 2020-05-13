@@ -2,12 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { ListGroup, Container, Image, Button } from 'react-bootstrap'
+import { deleteFromCart } from '../redux/actions/userActions'
+import { Link } from 'react-router-dom'
 
 const Cart = ({ cart, dispatch }) => {
     return (
         <div>
             <br />
             <Container style={{ textAlign: "left" }}>
+                <Link className='btn btn-primary' to='/' style={{ marginBottom: '10px' }}>Back</Link>
                 <h2>Shopping Cart</h2>
                 {
                     (cart.length === 0) ?
@@ -19,14 +22,19 @@ const Cart = ({ cart, dispatch }) => {
                                         <span>
                                             <Image
                                                 src={require('../../../backend/images/' + cartItem.item.picture)}
-                                                style={{ maxHeight: '100px', float: "left", marginRight: '10px' }}
+                                                style={{ maxWidth: '100px', float: "left", marginRight: '10px' }}
                                             />
                                             {cartItem.item.title}<br />
-                                Quantity: {cartItem.amount}
+                                            Quantity: {cartItem.amount}
                                         </span>
-                                        <Button variant='secondary' style={{ float: 'right' }}>X</Button>
+                                        <Button
+                                            variant='secondary'
+                                            style={{ float: 'right' }}
+                                            onClick={() => dispatch(deleteFromCart(cartItem))}
+                                        >X</Button>
                                     </ListGroup.Item>
                                 )}
+
                             </ListGroup><br/>
                             <Link 
                                 role="button"
@@ -34,7 +42,6 @@ const Cart = ({ cart, dispatch }) => {
                                 Proceed to checkout
                             </Link>
                             {/* <Button>Proceed to checkout</Button> */}
-                        
                         </div>)
                 }
             </Container>
