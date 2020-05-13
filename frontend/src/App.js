@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 import Item from './pages/Item';
 import { logout } from './redux/actions/userActions';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 import History from './pages/History';
 
 const App = ({ isLoggedIn, dispatch }) => {
@@ -50,6 +51,7 @@ const App = ({ isLoggedIn, dispatch }) => {
         <Route path="/login" component={Login} />
         <Route path='/item' component={Item} />
         <Route path='/cart' component={Cart} />
+        <Route path='/checkout' component={Checkout} />
         <Route path="/" component={Home} />
       
       </Switch>

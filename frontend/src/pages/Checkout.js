@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { ListGroup, Container, Image, Button } from 'react-bootstrap'
 
-const Cart = ({ cart, dispatch }) => {
+const Checkout = ({ cart, dispatch, shippingAddress }) => {
     return (
         <div>
             <br />
@@ -24,6 +24,12 @@ const Cart = ({ cart, dispatch }) => {
                             </ListGroup.Item>
                         )}
                     </ListGroup><br/>
+                    <div>
+                        Shipping Address: {" "}
+                    </div><br/>
+                    <div>
+                        Payment method: {" "}
+                    </div><br/>
                     <Button>Place your order</Button>
                 </div>
                 }
@@ -36,4 +42,4 @@ const mapStateToProps = (state) => ({
     cart: state.userReducer.cart
 })
 
-export default connect(mapStateToProps)(Cart)
+export default connect(mapStateToProps)(Checkout)
