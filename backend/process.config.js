@@ -25,8 +25,6 @@ module.exports = {
             name: "mail",
             script: "./mailService.js",
             watch: true,
-            instances: 2,
-            exec_mode: "cluster",
             ignore_watch: ["node_modules"],
             watch: true,
         },

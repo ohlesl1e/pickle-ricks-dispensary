@@ -30,9 +30,8 @@ consumer.on('message', (message) => {
     
     transporter.sendMail(mailOptions, (err, info) =>{
 		if (err) {
-			res.send(err)
+			console.log(err);
 		}
-		res.send(info)
 	})
 
 });

@@ -42,7 +42,7 @@ export const login = () => (dispatch, getState) => {
 	fetch(url, requestOptions)
 		.then(res => res.json())
 		.then(data => {
-			console.log('here');
+			//console.log('here');
 			if (data.valid) {
 				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
@@ -121,3 +121,29 @@ export const deleteFromCart = cartItem => (dispatch, getState) => {
 	console.log(cartItem);
 	dispatch(setCart(cart.slice(0, index).concat(cart.slice(index + 1))))
 }
+
+export const completeTransaction = () => (dispatch, getState) => {
+	console.log('called complete transactio function.')
+	const userName = getState().userReducer.user;
+	const url = '/api/receipts/create';
+
+	const requestOptions = {
+		method: 'POST',
+		headers: { 'Content-Type' : 'application/json'},
+		body: JSON.stringify({receipt_id : '22',
+								date : Date.now(),
+								price: '$22.22',
+								items: "[{nothing}, {but}, {air}]"	,
+								userId: userName
+		})
+	}
+
+	fetch(url, requestOptions)
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+		})
+		.catch( (e) => {
+			console.log(e);
+		})
+};
