@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
-	user: 'default',
+	user: '',
 	password: '',
+	email:'',
 	isLoggedIn: false,
 	loadingState: 'init',
 	cart: [],
@@ -17,6 +18,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				password: action.password,
+			};
+		case 'USER_SET_EMAIL':
+			return {
+			   ...state,
+			   email: action.email,
 			};
 		case 'USER_SET_IS_LOGGED_IN':
 			return {

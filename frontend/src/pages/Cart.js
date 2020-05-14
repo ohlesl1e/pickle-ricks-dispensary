@@ -35,11 +35,11 @@ const Cart = ({ cart, dispatch }) => {
                                     </ListGroup.Item>
                                 )}
 
-                            </ListGroup><br />
+                            </ListGroup><br/>
                             <Link
                                 role="button"
-                                to="/checkout">
-                                Proceed to checkout
+                                to="/checkout"> 
+                                <Button>Proceed to checkout</Button>
                             </Link>
                             {/* <Button>Proceed to checkout</Button> */}
                         </div>)
