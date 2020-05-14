@@ -30,7 +30,7 @@ const Signup = ({
       <h2>Sign up</h2>
       <div> 
         {/* this is a comment */}
-        Username: {" "} {" "}
+        <label>Email:</label>
         <input type="email" placeholder='Valid email address'
           value={email}
           onChange={e => dispatch(setEmail(e.target.value))}
@@ -38,7 +38,7 @@ const Signup = ({
       </div><br/>
       <div> 
         {/* this is a comment */}
-        Actual Name: {" "} {" "}
+        <label>Full Name:</label>
         <input placeholder ='Full name'
           value={user}
           onChange={e => dispatch(setUser(e.target.value))}
@@ -46,7 +46,7 @@ const Signup = ({
       </div><br/>
       
       <div>
-        Password: {" "} {" "}
+        <label>Password:</label>
         <input
           type="password" placeholder='Password'
           value={password}
