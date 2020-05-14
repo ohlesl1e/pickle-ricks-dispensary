@@ -54,7 +54,7 @@ const Signup = ({
       </div><br/>
       <div>
         {loadingState === 'error' && <b>User name already exists</b>}
-        {loadingState == 'Not' && <b> enter a valid email- address </b>}
+        {loadingState === 'Not' && <b> enter a valid email- address </b>}
         <button id="signup" onClick={() => dispatch(create())}>Sign up</button>
       </div>
     </div>

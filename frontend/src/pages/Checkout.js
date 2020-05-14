@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { ListGroup, Container, Image, Button } from 'react-bootstrap'
 import { completeTransaction } from '../redux/actions/userActions'
+import { Link } from 'react-router-dom'
 
 const Checkout = ({ cart, dispatch, shippingAddress }) => {
     return (
@@ -31,7 +32,7 @@ const Checkout = ({ cart, dispatch, shippingAddress }) => {
                     <div>
                         Payment method: {" "}
                     </div><br/>
-                    <Button onClick={() => dispatch(completeTransaction())}>Place your order</Button>
+                    <Link to='/' ><Button onClick={() => dispatch(completeTransaction())}>Place your order</Button></Link>
                 </div>
                 }
             </Container>

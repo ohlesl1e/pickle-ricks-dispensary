@@ -35,19 +35,20 @@ export const login = () => (dispatch, getState) => {
 	//console.log(reduxEvent);
 	// in order for redux to know something happened
 	dispatch(reduxEvent); // now redux knows something is happening
-	const userName = getState().userReducer.email;
+	const userEmail = getState().userReducer.email;
 	const userPassword = getState().userReducer.password;
 	const url = '/api/auth/authenticate';
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ email: userName, password: userPassword }),
+		body: JSON.stringify({ email: userEmail, password: userPassword }),
 	}
 	fetch(url, requestOptions)
 		.then(res => res.json())
 		.then(data => {
 			//console.log('here');
 			if (data.valid) {
+				dispatch(setUser(data.userName));
 				dispatch(setPassword(''));
 				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
