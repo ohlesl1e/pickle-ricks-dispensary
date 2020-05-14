@@ -2,21 +2,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  setUser,
   setPassword,
   login,
+  setEmail,
 } from '../redux/actions/userActions';
 import { Redirect } from 'react-router-dom';
 
 
 const Login = ({
-  user,
   password,
   isLoggedIn,
   loadingState,
   dispatch,
+  email,
 }) => {
-  
+
   if (isLoggedIn) {
     return <Redirect to="/" />;
   }
@@ -29,21 +29,20 @@ const Login = ({
     <div>
       <h2 className="loginTitle">Login</h2>
       <div>
-        {/* this is a comment */}
-        UserName: {" "}
-        <input 
-          value={user}
-          onChange={e => dispatch(setUser(e.target.value))}
+        <label>Email:</label>
+        <input placeholder='email address'
+          value={email}
+          onChange={e => dispatch(setEmail(e.target.value))}
         />
-      </div><br/>
+      </div><br />
       <div>
-        Password: {" "}
-        <input
+        <label>Password:</label>
+        <input placeholder='password'
           type="password"
           value={password}
           onChange={e => dispatch(setPassword(e.target.value))}
         />
-      </div><br/>
+      </div>
       <div>
         {loadingState === 'error' && <b>User name or password incorrect</b>}
         <button className="login" onClick={() => dispatch(login())}>Log in</button>
@@ -57,6 +56,7 @@ const mapStateToProps = state => {
   return {
     user: state.userReducer.user,
     password: state.userReducer.password,
+    email: state.userReducer.email,
     isLoggedIn: state.userReducer.isLoggedIn,
     loadingState: state.userReducer.loadingState,
   };

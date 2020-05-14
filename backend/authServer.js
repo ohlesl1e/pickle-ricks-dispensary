@@ -49,7 +49,7 @@ client.connect(err => {
           });
         } else {
           console.log('No results. Creating a new user...');
-          var newUser = {userId: req.body.userId, password: req.body.password};
+          var newUser = {userId: req.body.userId, password: req.body.password, email: req.body.email};
           db.collection('finalUserInfo').insertOne(newUser, function(err, res) {
             if(err){
               console.log(err);
@@ -66,7 +66,7 @@ client.connect(err => {
 
 
   app.post('/api/auth/authenticate', (req, res) => {
-    //console.log('check login');
+    console.log('check login');
     if(!req.body.password){
       res.send({
         valid: false
@@ -74,12 +74,12 @@ client.connect(err => {
     }
     db.collection('finalUserInfo')
       .findOne({
-        userId: req.body.userId
+        email: req.body.email
       })
       .then(doc => {
-        //console.log(doc);
+        console.log(doc);
         res.send({
-          valid: doc !== null && doc.password === req.body.password
+          valid: doc !== null && doc.password === req.body.password, userName: doc.userId
         });
       })
       .catch(e => {

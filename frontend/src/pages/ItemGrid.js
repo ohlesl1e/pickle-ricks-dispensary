@@ -11,7 +11,11 @@ const ItemGrid = ({ inventory, dispatch }) => {
                 <Row>
                     {inventory.map((item, i) =>
                         <Col sm='4' style={{ padding: '3px 3px' }} key={i}>
-                            <Link to='/item' onClick={() => dispatch(selectItem(i))}>
+                            <Link
+                                to='/item'
+                                onClick={() => dispatch(selectItem(i))}
+                                style={{ color: '#000' }}
+                            >
                                 <Card>
                                     <Card.Img src={require('../../../backend/images/' + item.picture)} fluid='true' />
                                     <Card.Body>

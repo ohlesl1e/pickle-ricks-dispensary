@@ -4,6 +4,7 @@ import {
   setUser,
   setPassword,
   create,
+  setEmail,
 } from '../redux/actions/userActions';
 import { Redirect } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ const Signup = ({
   isLoggedIn,
   loadingState,
   dispatch,
+  email,
 }) => {
   
   if (isLoggedIn) {
@@ -26,24 +28,33 @@ const Signup = ({
   return (
     <div>
       <h2>Sign up</h2>
-      <div>
+      <div> 
         {/* this is a comment */}
-        User:
-        <input
+        <label>Email:</label>
+        <input type="email" placeholder='Valid email address'
+          value={email}
+          onChange={e => dispatch(setEmail(e.target.value))}
+        />
+      </div><br/>
+      <div> 
+        {/* this is a comment */}
+        <label>Full Name:</label>
+        <input placeholder ='Full name'
           value={user}
           onChange={e => dispatch(setUser(e.target.value))}
         />
-      </div>
+      </div><br/>
       <div>
-        Password:
+        <label>Password:</label>
         <input
-          type="password"
+          type="password" placeholder='Password'
           value={password}
           onChange={e => dispatch(setPassword(e.target.value))}
         />
-      </div>
+      </div><br/>
       <div>
         {loadingState === 'error' && <b>User name already exists</b>}
+        {loadingState === 'Not' && <b> enter a valid email- address </b>}
         <button id="signup" onClick={() => dispatch(create())}>Sign up</button>
       </div>
     </div>
@@ -55,6 +66,7 @@ const mapStateToProps = state => {
   return {
     user: state.userReducer.user,
     password: state.userReducer.password,
+    email: state.userReducer.email,
     isLoggedIn: state.userReducer.isLoggedIn,
     loadingState: state.userReducer.loadingState,
   };
