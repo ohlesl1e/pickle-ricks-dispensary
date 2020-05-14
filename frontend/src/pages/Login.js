@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  setUser,
   setPassword,
   login,
   setEmail,
@@ -11,7 +10,6 @@ import { Redirect } from 'react-router-dom';
 
 
 const Login = ({
-  user,
   password,
   isLoggedIn,
   loadingState,
@@ -31,14 +29,14 @@ const Login = ({
     <div>
       <h2 className="loginTitle">Login</h2>
       <div>
-        <lable>Email:</lable>
+        <label>Email:</label>
         <input placeholder='email address'
           value={email}
           onChange={e => dispatch(setEmail(e.target.value))}
         />
       </div><br />
       <div>
-        <lable>Password:</lable>
+        <label>Password:</label>
         <input placeholder='password'
           type="password"
           value={password}
