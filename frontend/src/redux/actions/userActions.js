@@ -1,4 +1,5 @@
 import { setReceipts } from "./receiptActions";
+import { setInventory } from "./inventoryAction";
 
 export const setUser = user => ({
 	type: 'USER_SET_USER',
@@ -160,8 +161,17 @@ export const completeTransaction = () => (dispatch, getState) => {
 
 	fetch(url, requestOptions)
 		.then(res => res.json())
-		.then(data => {
+		.then(async data => {
 			console.log(data);
+			const inventory = await getState().inventoryReducer.inventory
+			console.log(inventory)
+			await cart.forEach(element=>{
+				inventory[inventory.findIndex(value=>{
+					return value.title === element.item.title
+				})].stock -= element.amount
+			})
+			console.log(inventory)
+			await dispatch(setInventory(inventory))
 		})
 		.catch( (e) => {
 			//console.log(e);
