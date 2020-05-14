@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'; // step 1
 import ItemGrid from './ItemGrid';
 import { getInventory } from '../redux/actions/inventoryAction';
-
+import { displayReceipts} from '../redux/actions/receiptActions';
 
 const Home = ({
 	isLoggedIn,
@@ -24,10 +24,11 @@ const Home = ({
 							</p>
 						</div>
 					</div>
+					
 				</div>
 			)}
 			{!isLoggedIn && (<p> Please Log in or Sign up</p>)}
-			<ItemGrid />
+		
 		</div>
 	);
 };
@@ -37,6 +38,9 @@ const mapStateToProps = state => ({
 	isLoggedIn: state.userReducer.isLoggedIn,
 	user: state.userReducer.user,
 	password: state.userReducer.password,
+	receipts: state.receiptReducer.receipts,
+	receipt: state.receiptReducer.receipt
+
 });
 
 // step 3 connect mapping function to component
