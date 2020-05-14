@@ -27,15 +27,14 @@ const Signup = ({
     <div>
       <h2>Sign up</h2>
       <div>
-        {/* this is a comment */}
-        User:
+        <label>Username:</label>
         <input
           value={user}
           onChange={e => dispatch(setUser(e.target.value))}
         />
-      </div>
+      </div><br/>
       <div>
-        Password:
+        <label>Password:</label>
         <input
           type="password"
           value={password}

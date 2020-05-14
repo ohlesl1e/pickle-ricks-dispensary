@@ -16,7 +16,7 @@ const Login = ({
   loadingState,
   dispatch,
 }) => {
-  
+
   if (isLoggedIn) {
     return <Redirect to="/" />;
   }
@@ -29,21 +29,20 @@ const Login = ({
     <div>
       <h2 className="loginTitle">Login</h2>
       <div>
-        {/* this is a comment */}
-        UserName: {" "}
-        <input 
+        <label>Username:</label>
+        <input
           value={user}
           onChange={e => dispatch(setUser(e.target.value))}
         />
-      </div><br/>
+      </div><br />
       <div>
-        Password: {" "}
+        <label>Password:</label>
         <input
           type="password"
           value={password}
           onChange={e => dispatch(setPassword(e.target.value))}
         />
-      </div><br/>
+      </div>
       <div>
         {loadingState === 'error' && <b>User name or password incorrect</b>}
         <button className="login" onClick={() => dispatch(login())}>Log in</button>
