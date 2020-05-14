@@ -48,6 +48,7 @@ export const login = () => (dispatch, getState) => {
 		.then(data => {
 			//console.log('here');
 			if (data.valid) {
+				dispatch(setPassword(''));
 				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
 			} else {

@@ -31,15 +31,14 @@ const Login = ({
     <div>
       <h2 className="loginTitle">Login</h2>
       <div>
-        {/* this is a comment */}
-        UserName: {" "}
+        <lable>Email:</lable>
         <input placeholder='email address'
           value={email}
           onChange={e => dispatch(setEmail(e.target.value))}
         />
       </div><br/>
       <div>
-        Password: {" "}
+        <lable>Password:</lable>
         <input placeholder='password'
           type="password"
           value={password}
