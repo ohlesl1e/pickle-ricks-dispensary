@@ -24,6 +24,7 @@ const Cart = ({ cart, dispatch }) => {
                                                 style={{ maxWidth: '100px', float: "left", marginRight: '10px' }}
                                             />
                                             {cartItem.item.title}<br />
+                                            <p className='text-muted'>{cartItem.item.description}</p><br />
                                             Quantity: {cartItem.amount}
                                         </span>
                                         <Button
@@ -34,10 +35,10 @@ const Cart = ({ cart, dispatch }) => {
                                     </ListGroup.Item>
                                 )}
 
-                            </ListGroup><br/>
-                            <Link 
+                            </ListGroup><br />
+                            <Link
                                 role="button"
-                                to="/checkout"> 
+                                to="/checkout">
                                 Proceed to checkout
                             </Link>
                             {/* <Button>Proceed to checkout</Button> */}

@@ -30,7 +30,7 @@ const Item = ({ item, dispatch }) => {
                                 <Card.Title>{item.title}</Card.Title>
                                 <Card.Subtitle className="mb-3 text-muted">from {item.seller}</Card.Subtitle>
                                 <Card.Text>
-                                    {item.desctiption}<br />
+                                    {item.description}<br /><br />
                                     In Stock: {item.stock}
                                 </Card.Text>
                                 Quantity:
