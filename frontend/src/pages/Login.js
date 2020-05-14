@@ -18,7 +18,7 @@ const Login = ({
   dispatch,
   email,
 }) => {
-  
+
   if (isLoggedIn) {
     return <Redirect to="/" />;
   }
@@ -36,7 +36,7 @@ const Login = ({
           value={email}
           onChange={e => dispatch(setEmail(e.target.value))}
         />
-      </div><br/>
+      </div><br />
       <div>
         <lable>Password:</lable>
         <input placeholder='password'
@@ -44,7 +44,7 @@ const Login = ({
           value={password}
           onChange={e => dispatch(setPassword(e.target.value))}
         />
-      </div><br/>
+      </div>
       <div>
         {loadingState === 'error' && <b>User name or password incorrect</b>}
         <button className="login" onClick={() => dispatch(login())}>Log in</button>

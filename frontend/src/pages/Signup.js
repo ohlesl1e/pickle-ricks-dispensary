@@ -44,7 +44,6 @@ const Signup = ({
           onChange={e => dispatch(setUser(e.target.value))}
         />
       </div><br/>
-      
       <div>
         <label>Password:</label>
         <input

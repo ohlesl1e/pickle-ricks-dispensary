@@ -25,7 +25,7 @@ const App = ({ isLoggedIn, dispatch }) => {
               <Link to='/cart' className='nav-link'>Cart</Link>
 
               {isLoggedIn ?
-                <Link id="logout" className='nav-link' to='/' onClick={() => dispatch(logout())}>Logout</Link> :
+                <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link> :
                 (<Nav><Link to="/login" className='nav-link'>Login</Link>
                   <Link to="/signup" className='nav-link'>Sign up</Link></Nav>)
               }
