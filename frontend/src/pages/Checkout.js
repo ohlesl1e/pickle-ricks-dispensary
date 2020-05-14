@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { ListGroup, Container, Image, Button } from 'react-bootstrap'
+import { completeTransaction } from '../redux/actions/userActions'
 
 const Checkout = ({ cart, dispatch, shippingAddress }) => {
     return (
@@ -30,7 +31,7 @@ const Checkout = ({ cart, dispatch, shippingAddress }) => {
                     <div>
                         Payment method: {" "}
                     </div><br/>
-                    <Button>Place your order</Button>
+                    <Button onClick={() => dispatch(completeTransaction())}>Place your order</Button>
                 </div>
                 }
             </Container>

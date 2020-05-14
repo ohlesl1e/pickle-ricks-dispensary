@@ -9,6 +9,10 @@ export const setPassword = password => ({
 	type: 'USER_SET_PASSWORD',
 	password,
 });
+export const setEmail = email =>({
+	type : 'USER_SET_EMAIL',
+	email,
+})
 
 export const setIsLoggedIn = isLoggedIn => ({
 	type: 'USER_SET_IS_LOGGED_IN',
@@ -31,20 +35,20 @@ export const login = () => (dispatch, getState) => {
 	//console.log(reduxEvent);
 	// in order for redux to know something happened
 	dispatch(reduxEvent); // now redux knows something is happening
-	const userName = getState().userReducer.user;
+	const userName = getState().userReducer.email;
 	const userPassword = getState().userReducer.password;
 	const url = '/api/auth/authenticate';
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ userId: userName, password: userPassword }),
+		body: JSON.stringify({ email: userName, password: userPassword }),
 	}
 	fetch(url, requestOptions)
 		.then(res => res.json())
 		.then(data => {
-			console.log('here');
+			//console.log('here');
 			if (data.valid) {
-				dispatch(setPassword(''))
+				dispatch(setPassword(''));
 				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
 			} else {
@@ -58,6 +62,7 @@ export const logout = () => (dispatch, getState) => {
 	dispatch(setIsLoggedIn(false));
 	dispatch(setUser(''));
 	dispatch(setPassword(''));
+	dispatch(setEmail(''));
 	dispatch(setReceipts([]));
 	dispatch(setCart([]))
 };
@@ -69,11 +74,16 @@ export const create = () => (dispatch, getState) => {
 	dispatch(reduxEvent); // now redux knows something is happening
 	const userName = getState().userReducer.user;
 	const userPassword = getState().userReducer.password;
+	const useremail= getState().userReducer.email;
+	if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(useremail)){
+	    dispatch(setLoadingState('Not'))
+	}
+	else{
 	const url = '/api/auth/create';
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ userId: userName, password: userPassword }),
+		body: JSON.stringify({ userId: userName, password: userPassword, email: useremail}),
 	}
 	fetch(url, requestOptions)
 		.then(res => res.json())
@@ -87,7 +97,7 @@ export const create = () => (dispatch, getState) => {
 			}
 		})
 		.catch(console.log);
-};
+}};
 
 export const addToCart = amount => (dispatch, getState) => {
 	const cart = getState().userReducer.cart
@@ -122,3 +132,39 @@ export const deleteFromCart = cartItem => (dispatch, getState) => {
 	console.log(cartItem);
 	dispatch(setCart(cart.slice(0, index).concat(cart.slice(index + 1))))
 }
+
+export const completeTransaction = () => (dispatch, getState) => {
+	console.log('called complete transactio function.')
+	const email = getState().userReducer.email;
+	const url = '/api/receipts/create';
+	const cart = getState().userReducer.cart;
+	console.log(cart);
+	console.log(email);
+	const jsonCart = [];
+	cart.forEach(element => {
+		jsonCart.push({title : element.item.title , quantity : element.amount})
+	});
+	
+
+	const requestOptions = {
+		method: 'POST',
+		headers: { 'Content-Type' : 'application/json'},
+		body: JSON.stringify({receipt_id : '22',
+								date : Date.now(),
+								price: '$22.22',
+								items: jsonCart	,
+								email: email
+		})
+	}
+	
+
+	fetch(url, requestOptions)
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+		})
+		.catch( (e) => {
+			//console.log(e);
+		})
+		
+};

@@ -35,10 +35,10 @@ const Cart = ({ cart, dispatch }) => {
                                 )}
 
                             </ListGroup><br/>
-                            <Link 
+                            <Link
                                 role="button"
                                 to="/checkout"> 
-                                Proceed to checkout
+                                <Button>Proceed to checkout</Button>
                             </Link>
                             {/* <Button>Proceed to checkout</Button> */}
                         </div>)

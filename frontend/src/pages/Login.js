@@ -5,6 +5,7 @@ import {
   setUser,
   setPassword,
   login,
+  setEmail,
 } from '../redux/actions/userActions';
 import { Redirect } from 'react-router-dom';
 
@@ -15,6 +16,7 @@ const Login = ({
   isLoggedIn,
   loadingState,
   dispatch,
+  email,
 }) => {
 
   if (isLoggedIn) {
@@ -29,15 +31,15 @@ const Login = ({
     <div>
       <h2 className="loginTitle">Login</h2>
       <div>
-        <label>Username:</label>
-        <input
-          value={user}
-          onChange={e => dispatch(setUser(e.target.value))}
+        <lable>Email:</lable>
+        <input placeholder='email address'
+          value={email}
+          onChange={e => dispatch(setEmail(e.target.value))}
         />
       </div><br />
       <div>
-        <label>Password:</label>
-        <input
+        <lable>Password:</lable>
+        <input placeholder='password'
           type="password"
           value={password}
           onChange={e => dispatch(setPassword(e.target.value))}
@@ -56,6 +58,7 @@ const mapStateToProps = state => {
   return {
     user: state.userReducer.user,
     password: state.userReducer.password,
+    email: state.userReducer.email,
     isLoggedIn: state.userReducer.isLoggedIn,
     loadingState: state.userReducer.loadingState,
   };
