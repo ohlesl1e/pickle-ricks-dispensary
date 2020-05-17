@@ -48,7 +48,7 @@ const Item = ({ item, dispatch,activeUsers }) => {
                                     {item.desctiption}<br />
                                     In Stock: {item.stock}
                                 </Card.Text>
-    <div>Active users: {activeUsers}</div>
+    <div>People currently viewing the item: {activeUsers}</div>
                                 Quantity:
                                 <select onChange={e => setAmount(e.target.value)}>
                                     {option}
