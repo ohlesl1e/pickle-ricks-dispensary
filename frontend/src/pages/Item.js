@@ -2,9 +2,24 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Container, Row, Col, Image, Card, Button } from 'react-bootstrap'
 import { addToCart } from '../redux/actions/userActions'
-import { Link } from 'react-router-dom'
+import {setActiveUsers} from '../redux/actions/userActions'
+import store from '../index'
 
-const Item = ({ item, dispatch }) => {
+import { Link } from 'react-router-dom'
+const ws= new WebSocket('ws://localhost:4000');
+
+
+
+ws.onclose=()=>{
+  console.log('connection closed');
+}
+ws.onmessage =(message) =>{
+
+  const messageObject = JSON.parse(message.data);
+  store.dispatch(setActiveUsers(messageObject.count))
+}
+
+const Item = ({ item, dispatch,activeUsers }) => {
     const [added, setAdded] = React.useState(false)
     const [amount, setAmount] = React.useState(1)
     const addedToCart = () => {
@@ -33,6 +48,7 @@ const Item = ({ item, dispatch }) => {
                                     {item.desctiption}<br />
                                     In Stock: {item.stock}
                                 </Card.Text>
+    <div>Active users: {activeUsers}</div>
                                 Quantity:
                                 <select onChange={e => setAmount(e.target.value)}>
                                     {option}
@@ -51,7 +67,8 @@ const Item = ({ item, dispatch }) => {
 }
 
 const mapStateToProps = (state) => ({
-    item: state.itemReducer.item
+    item: state.itemReducer.item,
+    activeUsers:state.userReducer.activeUsers,
 })
 
 export default connect(mapStateToProps)(Item)

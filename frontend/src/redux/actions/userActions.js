@@ -28,6 +28,10 @@ export const setCart = cart => ({
 	type: 'USER_SET_CART',
 	cart,
 })
+export const setActiveUsers = activeUsers =>({
+	type:'SET_ACTIVE_USERS',
+	activeUsers,
+	})
 
 export const login = () => (dispatch, getState) => {
 	//console.log('login function');

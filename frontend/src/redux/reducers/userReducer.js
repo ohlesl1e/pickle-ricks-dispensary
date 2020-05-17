@@ -39,6 +39,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				cart: action.cart,
 			};
+		case 'SET_ACTIVE_USERS':
+				return{
+				  ...state,
+				  activeUsers:action.activeUsers,
+				}
 		default:
 			return state;
 	}

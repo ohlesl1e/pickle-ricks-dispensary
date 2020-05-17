@@ -10,7 +10,11 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
 
+
 const store = createStore(rootReducer, applyMiddleware(thunk));
+
+
+
 
 ReactDOM.render(
   <Provider store={store}>
@@ -20,7 +24,7 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-
+export default store;
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
