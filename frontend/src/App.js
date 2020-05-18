@@ -11,6 +11,7 @@ import Cart from './pages/Cart';
 import { Nav, Navbar } from 'react-bootstrap';
 import Checkout from './pages/Checkout';
 import History from './pages/History';
+import AddItem from './pages/AddItem';
 
 
 const App = ({ isLoggedIn, dispatch }) => {
@@ -23,11 +24,13 @@ const App = ({ isLoggedIn, dispatch }) => {
             <Nav>
               <Link to="/" className='nav-link'>Home</Link>
               <Link to='/cart' className='nav-link'>Cart</Link>
+              <Link to="/additem" className='nav-link'>Add item</Link>
 
               {isLoggedIn ?
                 <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link> :
                 (<Nav><Link to="/login" className='nav-link'>Login</Link>
-                  <Link to="/signup" className='nav-link'>Sign up</Link></Nav>)
+                  <Link to="/signup" className='nav-link'>Sign up</Link>
+                </Nav>)
               }
             </Nav>
           </Navbar.Collapse>
@@ -40,8 +43,8 @@ const App = ({ isLoggedIn, dispatch }) => {
         <Route path='/item' component={Item} />
         <Route path='/cart' component={Cart} />
         <Route path='/checkout' component={Checkout} />
-        <Route path="/" component={Home} />
-      
+        <Route path="/additem" component={AddItem} />
+        <Route path="/" component={Home} />  
       </Switch>
     </div>
   );
