@@ -49,7 +49,7 @@ client.connect(err => {
           });
         } else {
           console.log('No results. Creating a new user...');
-          var newUser = {userId: req.body.userId, password: req.body.password, email: req.body.email};
+          var newUser = {userId: req.body.userId, password: req.body.password, email: req.body.email, userType: req.body.userType};
           db.collection('finalUserInfo').insertOne(newUser, function(err, res) {
             if(err){
               console.log(err);
