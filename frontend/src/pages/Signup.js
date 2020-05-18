@@ -5,6 +5,7 @@ import {
   setPassword,
   create,
   setEmail,
+  setUserType,
 } from '../redux/actions/userActions';
 import { Redirect } from 'react-router-dom';
 
@@ -51,7 +52,17 @@ const Signup = ({
           value={password}
           onChange={e => dispatch(setPassword(e.target.value))}
         />
-      </div><br/>
+      </div>
+      <div id="radioGroup" onChange={e => dispatch(setUserType(e.target.value))}>
+        <label>
+          <input type="radio" value="Buyer" name="usertype"/>
+          Buyer
+        </label>
+        <label>
+          <input type="radio" value="Seller" name="usertype"/>
+          Seller
+        </label>
+      </div>
       <div>
         {loadingState === 'error' && <b>User name already exists</b>}
         {loadingState === 'Not' && <b> enter a valid email- address </b>}
