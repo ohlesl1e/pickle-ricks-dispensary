@@ -13,7 +13,7 @@ import Checkout from './pages/Checkout';
 import History from './pages/History';
 
 
-const App = ({ isLoggedIn, dispatch }) => {
+const App = ({ isLoggedIn, dispatch,ws }) => {
   return (
     <div className="App">
       <Navbar variant='light' bg='light' expand='sm'>
@@ -37,7 +37,7 @@ const App = ({ isLoggedIn, dispatch }) => {
         <Route path="/History" component={History} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        <Route path='/item' component={Item} />
+        <Route path='/item' render={()=><Item ws={ws}/>}/>
         <Route path='/cart' component={Cart} />
         <Route path='/checkout' component={Checkout} />
         <Route path="/" component={Home} />

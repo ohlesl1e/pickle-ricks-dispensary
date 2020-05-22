@@ -6,19 +6,7 @@ import {setViews} from '../redux/actions/itemActions'
 import store from '../index'
 
 import { Link } from 'react-router-dom'
-const ws= new WebSocket('ws://localhost:4000');
 
-
-
-ws.onclose=()=>{
-  console.log('connection closed');
-}
-ws.onmessage =(message) =>{
-
-  const messageObject = JSON.parse(message.data);
-  console.log(message);
-  store.dispatch(setViews(messageObject.count))
-}
 
 const Item = ({ item, dispatch, views }) => {
     const [added, setAdded] = React.useState(false)

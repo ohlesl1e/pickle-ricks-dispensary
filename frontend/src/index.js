@@ -9,17 +9,26 @@ import rootReducer from './redux/reducers/rootReducer';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
-
-
+import {setViews} from './redux/actions/itemActions'
 const store = createStore(rootReducer, applyMiddleware(thunk));
+const ws= new WebSocket('ws://localhost:4000');
 
 
 
+ws.onclose=()=>{
+  console.log('connection closed');
+}
+ws.onmessage =(message) =>{
+
+  const messageObject = JSON.parse(message.data);
+  console.log(message);
+  store.dispatch(setViews(messageObject.count))
+}
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <App />
+      <App ws={ws}/>
     </Router>
   </Provider>,
   document.getElementById('root')
