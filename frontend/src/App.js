@@ -27,7 +27,7 @@ const App = ({ isLoggedIn, dispatch, userType }) => {
     }
   }, [])
 
-  if(userType == 'Seller') { seller = true; }
+  if(userType === 'Seller') { seller = true; }
   return (
     <div className="App">
       <Navbar variant='light' bg='light' expand='sm'>
