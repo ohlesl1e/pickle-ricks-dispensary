@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Container, Row, Col, Image, Card, Button } from 'react-bootstrap'
 import { addToCart } from '../redux/actions/userActions'
-import {setViews} from '../redux/actions/itemActions'
+
 import store from '../index'
 
 import { Link } from 'react-router-dom'

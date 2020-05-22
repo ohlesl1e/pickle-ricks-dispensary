@@ -40,7 +40,7 @@ const App = ({ isLoggedIn, dispatch,ws }) => {
         <Route path='/item' render={()=><Item ws={ws}/>}/>
         <Route path='/cart' component={Cart} />
         <Route path='/checkout' component={Checkout} />
-        <Route path="/" component={Home} />
+        <Route path="/" render={()=><Home ws={ws}/>} />
       
       </Switch>
     </div>

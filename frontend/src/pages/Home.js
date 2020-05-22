@@ -10,6 +10,7 @@ const Home = ({
 	receipt,
 	receipts,
 	dispatch,
+	ws
 }) => { 
 	dispatch(getInventory());
 	return (
@@ -27,7 +28,7 @@ const Home = ({
 				</div>
 			)}
 			{!isLoggedIn && (<p> Please Log in or Sign up</p>)}
-			<ItemGrid />
+			<ItemGrid ws={ws} />
 		</div>
 	);
 };

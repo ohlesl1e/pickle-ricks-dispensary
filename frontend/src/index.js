@@ -22,8 +22,13 @@ ws.onmessage =(message) =>{
 
   const messageObject = JSON.parse(message.data);
   console.log(message);
-  store.dispatch(setViews(messageObject.count))
-}
+  switch(messageObject.type){
+    case 'UPDATE_COUNT':
+      //handle if message type is update user
+      store.dispatch(setViews(messageObject.active))
+      break;
+  
+}}
 
 ReactDOM.render(
   <Provider store={store}>
