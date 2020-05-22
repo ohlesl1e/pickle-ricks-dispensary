@@ -28,7 +28,7 @@ const db=client.db(dbName);
 app.post('/api/receipts/get', (req,res) => {
       db.collection('finalUserInfo')
         .findOne({
-            userId:req.body.userId
+            email:req.body.email
         })
         .then(doc =>{
             res.send(doc.receipts);
@@ -46,17 +46,18 @@ app.post('/api/receipts/create',(req,res)=>{
     let items_purchased=[];
     items_purchased.push(req.body.items);
     let receipt = [];
+    //console.log(req.body);
     receipt.push(receipt_id,date,totalPrice,items_purchased);
     db.collection('finalUserInfo')
     .findOne({
-        userId:req.body.userId
+        email:req.body.email
     })
     .then(doc=>{
         if(doc.receipts){
             db.collection('finalUserInfo')
             .updateOne(
                 {
-                    userId:req.body.userId},
+                    email:req.body.email},
                 {
                     $push: { "receipts":receipt}
                 }
@@ -64,7 +65,8 @@ app.post('/api/receipts/create',(req,res)=>{
              .then(()=>{
               
               console.log('Email of the receipt will be sent');
-              producer.send(receipt);
+              //console.log(receipt);
+              producer.send(req.body);
               res.send('Receipt saved');
                
              }
@@ -77,14 +79,14 @@ app.post('/api/receipts/create',(req,res)=>{
         else{
              db.collection('finalUserInfo')
               .updateOne(
-                {userId:req.body.userId},
+                {email:req.body.email},
                 {
                     $set: { "receipts":receipt}
                 }
                 )
              .then(() =>{
               console.log('Email of the receipt will be sent');
-              producer.send(receipt);
+              producer.send(req.body);
               res.send('Receipt saved');               
              })
              .catch(e=>{

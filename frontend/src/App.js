@@ -8,39 +8,56 @@ import Signup from './pages/Signup';
 import Item from './pages/Item';
 import { logout } from './redux/actions/userActions';
 import Cart from './pages/Cart';
-import History from './pages/Purchasehistory';
+import { Nav, Navbar } from 'react-bootstrap';
+import Checkout from './pages/Checkout';
+import History from './pages/History';
+import AddItem from './pages/AddItem';
 
 
-const App = ({ isLoggedIn, dispatch }) => {
+
+const App = ({ isLoggedIn, dispatch, userType }) => {
+  let seller = false;
+
+  if(userType == 'Seller') { seller = true; }
   return (
     <div className="App">
-      <nav className='nav-bar'>
-        <div className="nav-wrapper">
-        <Link to="/" className='nav-brand-logo'>Home</Link>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <Navbar variant='light' bg='light' expand='sm'>
+        <div className='container'>
+          <Navbar.Toggle />
+          <Navbar.Collapse>
+            <Nav>
+              <Link to="/" className='nav-link'>Home</Link>
+              <Link to='/cart' className='nav-link'>Cart</Link>
 
-            <li><input type='text'className='search' placeholder='Search'/></li>
-            <li>   <Link to="/login">Login</Link></li>
-
-            <li><Link to="/signup">Sign up</Link>></li>
-            <li><Link to="/cart"><i class="fas fa-shopping-cart"></i></Link></li>
-          </ul>
+              {isLoggedIn ?
+                <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link> :
+                (<Nav><Link to="/login" className='nav-link'>Login</Link>
+                  <Link to="/signup" className='nav-link'>Sign up</Link>
+                </Nav>)
+              }
+              { seller &&
+                 <Link to="/additem" className='nav-link'>Add item</Link>
+              }     
+            </Nav>
+          </Navbar.Collapse>
         </div>
-      </nav>
-
+      </Navbar>
       <Switch>
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path='/item' component={Item} />
         <Route path='/cart' component={Cart} />
-        <Route path="/" component={Home} />
+        <Route path='/checkout' component={Checkout} />
+        <Route path="/additem" component={AddItem} />
+        <Route path="/" component={Home} />  
       </Switch>
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.userReducer.isLoggedIn
+  isLoggedIn: state.userReducer.isLoggedIn,
+  userType: state.userReducer.userType
 })
 
 export default connect(mapStateToProps)(App);

@@ -8,6 +8,13 @@ module.exports = {
             watch: true,
         },
         {
+            name: "additems",
+            script: "./addItemServer.js",
+            watch: true,
+            ignore_watch: ["node_modules"],
+            watch: true,
+        },
+        {
             name: "inventory",
             script: "./invServer.js",
             watch: true,
@@ -25,8 +32,6 @@ module.exports = {
             name: "mail",
             script: "./mailService.js",
             watch: true,
-            instances: 2,
-            exec_mode: "cluster",
             ignore_watch: ["node_modules"],
             watch: true,
         },

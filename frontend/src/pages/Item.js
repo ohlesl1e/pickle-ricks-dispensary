@@ -2,9 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Container, Row, Col, Image, Card, Button } from 'react-bootstrap'
 import { addToCart } from '../redux/actions/userActions'
+import { Link } from 'react-router-dom'
 
 const Item = ({ item, dispatch }) => {
+    const [added, setAdded] = React.useState(false)
     const [amount, setAmount] = React.useState(1)
+    const addedToCart = () => {
+        setAdded(true)
+        setTimeout(() => {
+            setAdded(false)
+        }, 1500);
+    }
     const option = []
     for (let i = 0; i < item.stock; i++) {
         option.push(<option value={i + 1} key={i}>{i + 1}</option>)
@@ -13,8 +21,9 @@ const Item = ({ item, dispatch }) => {
         <div>
             <br />
             <Container style={{ textAlign: 'left' }}>
+                <Link className='btn btn-primary' to='/' style={{marginBottom:'10px'}}>Back</Link>
                 <Row>
-                    <Col sm='4'><Image src={require('../../../backend/images/' + item.picture)} fluid='true' /></Col>
+                    <Col sm='4'><Image src={require(`./../../../backend/images/${item.picture}`)} fluid='true' /></Col>
                     <Col>
                         <Card>
                             <Card.Body>
@@ -28,7 +37,10 @@ const Item = ({ item, dispatch }) => {
                                 <select onChange={e => setAmount(e.target.value)}>
                                     {option}
                                 </select>
-                                {' '}<Button onClick={() => dispatch(addToCart(amount))}>Add to cart</Button>
+                                {' '}<Button onClick={() => {
+                                    dispatch(addToCart(amount))
+                                    addedToCart()
+                                }}>Add to cart</Button>{added && <p style={{ color: 'red' }}>Item added</p>}
                             </Card.Body>
                         </Card>
                     </Col>
