@@ -14,6 +14,7 @@ import History from './pages/History';
 import AddItem from './pages/AddItem';
 
 
+
 const App = ({ isLoggedIn, dispatch, userType }) => {
   let seller = false;
 
@@ -42,7 +43,6 @@ const App = ({ isLoggedIn, dispatch, userType }) => {
         </div>
       </Navbar>
       <Switch>
-        <Route path="/History" component={History} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path='/item' component={Item} />
