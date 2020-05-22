@@ -3,8 +3,8 @@ const options = {
     port:4000,
 }
 const wss= new WebSocket.Server(options)
-const notes = [];
-let active;
+let itemViews = {};
+
 
 const broadcastMessage = (message) =>{
 wss.clients.forEach((client)=>{
@@ -13,17 +13,14 @@ wss.clients.forEach((client)=>{
     }
 })
 }
-const broadcastNewNote = (id,views) => {
+const broadcastNewNote = (id) => {
    // notes.push(id);
    // console.log(views)
-   active=views+1
-    console.log(active)
 
     
     broadcastMessage({
         type:'UPDATE_COUNT',
-        active,
-        
+        id,       
     });
 };
 
@@ -35,16 +32,28 @@ wss.on('connection',(ws)=>{// ws represents a single connection to a single tab
     
     //event 2 message   
     ws.on('message',(message)=>{
-    console.log(message); //incoming from client
     const messageObject=JSON.parse(message);
-    console.log(messageObject)
     switch(messageObject.type){
         case 'UPDATE_COUNT':
-            console.log('In n')
-            broadcastNewNote(messageObject.id,messageObject.active_users);
+            
+            if(itemViews.hasOwnProperty(messageObject.id)){
+                itemViews[messageObject.id] += 1;
+            } else {
+                itemViews[messageObject.id] = 1;
+            }
+            messageObject.views = itemViews[messageObject.id];
+            console.log(messageObject);
+            broadcastNewNote(messageObject);
             break;
-            default:
-                console.log('message type not supported');
+        case 'DECREASE_COUNT':
+            
+            if(itemViews.hasOwnProperty(messageObject.id)){
+                itemViews[messageObject.id] -= 1;
+            }
+            messageObject.views = itemViews[messageObject.id];
+            broadcastMessage(messageObject);
+        default:
+            console.log('message type not supported');
     }
     });
 

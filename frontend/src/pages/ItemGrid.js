@@ -4,7 +4,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { selectItem } from '../redux/actions/inventoryAction'
 
-const ItemGrid = ({ inventory, dispatch,ws }) => {
+const ItemGrid = ({ inventory, dispatch, ws }) => {
     return (
         <div>
             <Container>
@@ -14,12 +14,12 @@ const ItemGrid = ({ inventory, dispatch,ws }) => {
                             <Link
                                 to='/item'
                                 onClick={() => {dispatch(selectItem(i))
+                                    //console.log(item);
                                     const dataToSend = {
                                         type:'UPDATE_COUNT',
-                                        id: item.id,
-                                        active_users:item.views,
+                                        id: item._id,
                                             };
-                                        ws.send(JSON.stringify(dataToSend));
+                                    ws.send(JSON.stringify(dataToSend));
                                 }}
                                 style={{ color: '#000' }}
                             >

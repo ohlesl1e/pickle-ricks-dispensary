@@ -25,7 +25,7 @@ ws.onmessage =(message) =>{
   switch(messageObject.type){
     case 'UPDATE_COUNT':
       //handle if message type is update user
-      store.dispatch(setViews(messageObject.active))
+      //store.dispatch(setViews(messageObject.active))
       break;
   
 }}
