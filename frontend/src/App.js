@@ -17,9 +17,11 @@ import AddItem from './pages/AddItem';
 const App = ({ isLoggedIn, dispatch, userType }) => {
   let seller = false;
 
+
   if(userType == 'Seller') { seller = true; }
   return (
     <div className="App">
+      <div>notification</div>
       <Navbar variant='light' bg='light' expand='sm'>
         <div className='container'>
           <Navbar.Toggle />
@@ -29,6 +31,7 @@ const App = ({ isLoggedIn, dispatch, userType }) => {
               <Link to='/cart' className='nav-link'>Cart</Link>
 
               {isLoggedIn ?
+ 
                 <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link> :
                 (<Nav><Link to="/login" className='nav-link'>Login</Link>
                   <Link to="/signup" className='nav-link'>Sign up</Link>
