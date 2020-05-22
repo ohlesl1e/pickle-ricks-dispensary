@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,18 @@
   to {
     transform: rotate(360deg);
   }
+} */
+.nav-bar{
+  padding: 0px 20px;
+  background-color: blue;
+}
+
+input::placeholder{
+  color: white;
+  font-size: large;
+  font-weight: bold;;
+}
+.search{
+  color: white;
+  font-size: 20px;
 }
