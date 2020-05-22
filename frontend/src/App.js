@@ -4,8 +4,17 @@ import { Switch, Route, Link } from "react-router-dom";
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import { setIsLoggedIn, setUser } from './redux/actions/userActions';
+import { retrieveCookie } from './cookies';
 
-const App = () => {
+const App = ({dispatch}) => {
+  React.useEffect(() => {
+    const user = retrieveCookie('user')
+    if (user) {
+      dispatch(setIsLoggedIn(true))
+      dispatch(setUser(user))
+    }
+  }, [])
   return (
     <div className="App">
       <div className="nav-bar">
@@ -28,4 +37,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default connect()(App);
