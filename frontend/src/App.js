@@ -34,7 +34,7 @@ const App = ({ isLoggedIn, dispatch, userType }) => {
         <div className="nav-wrapper">
           <Link to="/" className='nav-brand-logo'>Home</Link>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><input type='text'className='search' placeholder='Search'/></li>
+           
             {isLoggedIn && (
                 <li><Link id="logout" onClick={() => dispatch(logout())} to='/'>Logout</Link></li>
               )
