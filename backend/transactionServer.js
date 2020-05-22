@@ -3,6 +3,8 @@ const KafkaProducer = require('./KafkaProducer.js');
 const producer = new KafkaProducer('email');
 const { MongoClient } = require('mongodb');
 const app = express();
+const redis=require('redis');
+const client=redis.createClient();
 const port = 3006;
 
 
@@ -68,6 +70,7 @@ app.post('/api/receipts/create',(req,res)=>{
               //console.log(receipt);
               producer.send(req.body);
               res.send('Receipt saved');
+              client.publish('notification',`Items have been purchased`)
                
              }
             )
