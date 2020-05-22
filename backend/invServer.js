@@ -28,8 +28,18 @@ client.connect(err => {
   const db=client.db(dbName);
 
   app.get('/api/inventory/get', (req,res) => {
+    console.log('all inventory called');
     db.collection('Inventory')
     .find({}).toArray( (err, result) =>{
+      if( err ) console.log(err);
+      res.send(result);
+    });
+  });
+
+  app.post('/api/inventory/seller/get', (req,res) => {
+    console.log('seller inventory called')
+    db.collection('Inventory')
+    .find({sellerEmail : req.body.sellerEmail}).toArray( (err, result) =>{
       if( err ) console.log(err);
       res.send(result);
     });
