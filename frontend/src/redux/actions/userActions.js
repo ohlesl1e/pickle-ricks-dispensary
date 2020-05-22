@@ -1,4 +1,5 @@
 import { setReceipts } from "./receiptActions";
+import { deleteCookie, saveUser, saveType, saveEmail } from "../../cookies";
 
 export const setUser = user => ({
 	type: 'USER_SET_USER',
@@ -58,7 +59,10 @@ export const login = () => (dispatch, getState) => {
 				dispatch(setPassword(''));
 				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
-				dispatch(setUserType(data.userType))
+        dispatch(setUserType(data.userType))
+        saveUser(data.userName)
+        saveEmail(userEmail)
+        saveType(data.userType)
 			} else {
 				dispatch(setLoadingState('error'));
 			}
@@ -72,7 +76,8 @@ export const logout = () => (dispatch, getState) => {
 	dispatch(setPassword(''));
 	dispatch(setEmail(''));
 	dispatch(setReceipts([]));
-	dispatch(setCart([]))
+  dispatch(setCart([]))
+  deleteCookie()
 };
 
 export const create = () => (dispatch, getState) => {
