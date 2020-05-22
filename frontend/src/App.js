@@ -6,16 +6,26 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Item from './pages/Item';
-import { logout } from './redux/actions/userActions';
+import { logout, setIsLoggedIn, setEmail, setUserType, setUser } from './redux/actions/userActions';
 import Cart from './pages/Cart';
 import { Nav, Navbar } from 'react-bootstrap';
 import Checkout from './pages/Checkout';
 import History from './pages/History';
 import AddItem from './pages/AddItem';
+import { retrieveUser, retrieveType, retrieveEmail } from './cookies';
 
 
 const App = ({ isLoggedIn, dispatch, userType }) => {
   let seller = false;
+  React.useEffect(() => {
+    const user = retrieveUser()
+    if (user) {
+      dispatch(setEmail(retrieveEmail()))
+      dispatch(setUserType(retrieveType()))
+      dispatch(setUser(user))
+      dispatch(setIsLoggedIn(true))
+    }
+  }, [])
 
   if(userType == 'Seller') { seller = true; }
   return (
