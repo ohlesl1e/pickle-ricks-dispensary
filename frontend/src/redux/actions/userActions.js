@@ -152,8 +152,8 @@ export const completeTransaction = () => (dispatch, getState) => {
 	const email = getState().userReducer.email;
 	const url = '/api/receipts/create';
 	const cart = getState().userReducer.cart;
-	console.log(cart);
-	console.log(email);
+	//console.log(cart);
+	//console.log(email);
 	const jsonCart = [];
 	cart.forEach(element => {
 		jsonCart.push({title : element.item.title , quantity : element.amount})
