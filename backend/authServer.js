@@ -64,7 +64,7 @@ client.connect(err => {
       });
   });
 
-
+  // valid: doc !== null && doc.password === req.body.password && req.body.email === doc.email
   app.post('/api/auth/authenticate', (req, res) => {
     console.log('check login');
     if(!req.body.password){
@@ -77,10 +77,33 @@ client.connect(err => {
         email: req.body.email
       })
       .then(doc => {
-        console.log(doc);
-        res.send({
-          valid: doc !== null && doc.password === req.body.password, userName: doc.userId, userType: doc.userType
-        });
+        console.log("doc" + JSON.stringify(doc));
+        // console.log("email" + doc.email);
+        // console.log("password" + doc.password);
+
+        if (doc !== null) {
+          res.send({
+            valid: doc !== null && doc.password === req.body.password && doc.email === req.body.email,
+            userName: doc.userId, 
+            userType: doc.userType
+          });
+        }
+        else {
+          res.send({
+            valid: false
+          });
+        }
+        
+
+
+      //   if(doc !== null) {
+        
+      // } else {
+      //   res.send({
+      //     valid: doc.password === req.body.password, userName: doc.userId, userType: doc.userType
+      //   });
+      // }
+
       })
       .catch(e => {
         console.log(e);
