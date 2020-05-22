@@ -79,7 +79,7 @@ client.connect(err => {
       .then(doc => {
         console.log(doc);
         res.send({
-          valid: doc !== null && doc.password === req.body.password, userName: doc.userId
+          valid: doc !== null && doc.password === req.body.password, userName: doc.userId, userType: doc.userType
         });
       })
       .catch(e => {

@@ -14,7 +14,10 @@ import History from './pages/History';
 import AddItem from './pages/AddItem';
 
 
-const App = ({ isLoggedIn, dispatch }) => {
+const App = ({ isLoggedIn, dispatch, userType }) => {
+  let seller = false;
+
+  if(userType == 'Seller') { seller = true; }
   return (
     <div className="App">
       <Navbar variant='light' bg='light' expand='sm'>
@@ -24,7 +27,6 @@ const App = ({ isLoggedIn, dispatch }) => {
             <Nav>
               <Link to="/" className='nav-link'>Home</Link>
               <Link to='/cart' className='nav-link'>Cart</Link>
-              <Link to="/additem" className='nav-link'>Add item</Link>
 
               {isLoggedIn ?
                 <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link> :
@@ -32,6 +34,9 @@ const App = ({ isLoggedIn, dispatch }) => {
                   <Link to="/signup" className='nav-link'>Sign up</Link>
                 </Nav>)
               }
+              { seller &&
+                 <Link to="/additem" className='nav-link'>Add item</Link>
+              }     
             </Nav>
           </Navbar.Collapse>
         </div>
@@ -51,7 +56,8 @@ const App = ({ isLoggedIn, dispatch }) => {
 }
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.userReducer.isLoggedIn
+  isLoggedIn: state.userReducer.isLoggedIn,
+  userType: state.userReducer.userType
 })
 
 export default connect(mapStateToProps)(App);

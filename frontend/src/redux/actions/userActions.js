@@ -53,10 +53,12 @@ export const login = () => (dispatch, getState) => {
 		.then(data => {
 			//console.log('here');
 			if (data.valid) {
+				console.log(data);
 				dispatch(setUser(data.userName));
 				dispatch(setPassword(''));
 				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
+				dispatch(setUserType(data.userType))
 			} else {
 				dispatch(setLoadingState('error'));
 			}
