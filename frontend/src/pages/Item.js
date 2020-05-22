@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Container, Row, Col, Image, Card, Button } from 'react-bootstrap'
 import { addToCart } from '../redux/actions/userActions'
-import {setActiveUsers} from '../redux/actions/userActions'
+import {setViews} from '../redux/actions/itemActions'
 import store from '../index'
 
 import { Link } from 'react-router-dom'
@@ -16,10 +16,11 @@ ws.onclose=()=>{
 ws.onmessage =(message) =>{
 
   const messageObject = JSON.parse(message.data);
-  store.dispatch(setActiveUsers(messageObject.count))
+  console.log(message);
+  store.dispatch(setViews(messageObject.count))
 }
 
-const Item = ({ item, dispatch,activeUsers }) => {
+const Item = ({ item, dispatch, views }) => {
     const [added, setAdded] = React.useState(false)
     const [amount, setAmount] = React.useState(1)
     const addedToCart = () => {
@@ -48,7 +49,7 @@ const Item = ({ item, dispatch,activeUsers }) => {
                                     {item.desctiption}<br />
                                     In Stock: {item.stock}
                                 </Card.Text>
-    <div>People currently viewing the item: {activeUsers}</div>
+    <div>People currently viewing the item: {views}</div>
                                 Quantity:
                                 <select onChange={e => setAmount(e.target.value)}>
                                     {option}
@@ -68,7 +69,7 @@ const Item = ({ item, dispatch,activeUsers }) => {
 
 const mapStateToProps = (state) => ({
     item: state.itemReducer.item,
-    activeUsers:state.userReducer.activeUsers,
+    views: state.itemReducer.views
 })
 
 export default connect(mapStateToProps)(Item)

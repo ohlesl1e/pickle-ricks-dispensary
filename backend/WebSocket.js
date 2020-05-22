@@ -24,6 +24,7 @@ wss.on('connection',(ws)=>{
 
 ws.on('close',()=>{
     console.log('closed');
+    updateUserCount();
 });
 
 ws.on('error',(e)=>{

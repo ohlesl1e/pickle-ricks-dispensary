@@ -6,6 +6,7 @@ const initialState = {
         desctiption: '',
         stock: '',
         picture: '',
+        views: '',
     }
 }
 
@@ -16,7 +17,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 item: action.item
-            }
+            };
+        case 'ITEM_SET_VIEWS':
+			return{
+				...state,
+				views: action.views,
+			}
 
         default:
             return state
