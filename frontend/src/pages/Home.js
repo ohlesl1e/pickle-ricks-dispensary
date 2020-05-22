@@ -15,7 +15,7 @@ const Home = ({
 }) => { 
 	console.log('home called');
 	console.log(userType);
-	if(userType == 'Seller'){
+	if(userType === 'Seller'){
 		dispatch(getInventorySeller(email));
 	} else {
 		dispatch(getInventory());
