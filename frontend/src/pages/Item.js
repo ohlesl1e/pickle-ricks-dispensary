@@ -17,6 +17,7 @@ const Item = ({ item, dispatch }) => {
     for (let i = 0; i < item.stock; i++) {
         option.push(<option value={i + 1} key={i}>{i + 1}</option>)
     }
+    console.log(item);
     return (
         <div>
             <br />
@@ -28,7 +29,7 @@ const Item = ({ item, dispatch }) => {
                         <Card>
                             <Card.Body>
                                 <Card.Title>{item.title}</Card.Title>
-                                <Card.Subtitle className="mb-3 text-muted">from {item.seller}</Card.Subtitle>
+                                <Card.Subtitle className="mb-3 text-muted">from {item.sellerName}</Card.Subtitle>
                                 <Card.Text>
                                     {item.desctiption}<br />
                                     In Stock: {item.stock}

@@ -38,7 +38,6 @@ export const getInventorySeller = (email) => (dispatch) => {
         .then( res => res.json())
         .then( data => {
             dispatch(setInventory(data))
-            //dispatch(setInventory(data));
         })
         .catch(console.log);
 
