@@ -14,19 +14,13 @@ import History from './pages/History';
 import AddItem from './pages/AddItem';
 
 
-const App = ({ isLoggedIn, dispatch,ws,notification}) => {
-  return (
-    <div className="App">
-      <div>notification{notification}</div>
-
-const App = ({ isLoggedIn, dispatch, userType, ws }) => {
+const App = ({ isLoggedIn, dispatch, userType, ws, notification }) => {
   let seller = false;
-
 
   if(userType == 'Seller') { seller = true; }
   return (
     <div className="App">
-      <div>notification</div>
+      <div>notification{notification}</div>
       <Navbar variant='light' bg='light' expand='sm'>
         <div className='container'>
           <Navbar.Toggle />
@@ -59,7 +53,6 @@ const App = ({ isLoggedIn, dispatch, userType, ws }) => {
         <Route path="/" render={()=><Home ws={ws}/>} />
         <Route path="/additem" component={AddItem} />
       </Switch>
-    </div>
     </div>
   );
 }

@@ -2,43 +2,41 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Container, Row, Col, Image, Card, Button } from 'react-bootstrap'
 import { addToCart } from '../redux/actions/userActions'
-
-import store from '../index'
-
 import { Link } from 'react-router-dom'
 
-
 const Item = ({ item, dispatch, ws }) => {
-    const [views, setViews] = React.useState('')
     const [added, setAdded] = React.useState(false)
     const [amount, setAmount] = React.useState(1)
+    const [views, setViews] = React.useState('')
+
     const addedToCart = () => {
         setAdded(true)
         setTimeout(() => {
             setAdded(false)
         }, 1500);
     }
-    const option = []
-    for (let i = 0; i < item.stock; i++) {
-        option.push(<option value={i + 1} key={i}>{i + 1}</option>)
-    }
+
     
     ws.onmessage =(message) =>{
         const messageObject = JSON.parse(message.data);
         switch(messageObject.type){
           case 'UPDATE_COUNT':
             
-            if(item._id == messageObject.id.id){
-                setViews(messageObject.id.views);
+            if(item._id == messageObject.id){
+                setViews(messageObject.views);
             }
              break;
             
         case 'DECREASE_COUNT':
             
-            if(item._id == messageObject.id.id){
-                setViews(messageObject.id.views);
+            if(item._id == messageObject.id){
+                setViews(messageObject.views);
             }
+            
+            break;
 
+        default:
+            console.log('message type not supported');
 
     }};
 
@@ -52,6 +50,12 @@ const Item = ({ item, dispatch, ws }) => {
         ws.send(JSON.stringify(dataToSend));
     }
 
+
+    const option = []
+    for (let i = 0; i < item.stock; i++) {
+        option.push(<option value={i + 1} key={i}>{i + 1}</option>)
+    }
+
     return (
         <div>
             <br />
@@ -63,12 +67,12 @@ const Item = ({ item, dispatch, ws }) => {
                         <Card>
                             <Card.Body>
                                 <Card.Title>{item.title}</Card.Title>
-                                <Card.Subtitle className="mb-3 text-muted">from {item.seller}</Card.Subtitle>
+                                <Card.Subtitle className="mb-3 text-muted">from {item.sellerName}</Card.Subtitle>
                                 <Card.Text>
                                     {item.desctiption}<br />
-                                    In Stock: {item.stock}
+                                    In Stock: {item.stock} <br />  Price: ${item.price} per item. <br />
+                                    People viewing this item : {views}
                                 </Card.Text>
-    <div>People currently viewing the item: {views}</div>
                                 Quantity:
                                 <select onChange={e => setAmount(e.target.value)}>
                                     {option}
@@ -88,7 +92,7 @@ const Item = ({ item, dispatch, ws }) => {
 }
 
 const mapStateToProps = (state) => ({
-    item: state.itemReducer.item,
+    item: state.itemReducer.item
 })
 
 export default connect(mapStateToProps)(Item)

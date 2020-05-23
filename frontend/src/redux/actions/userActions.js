@@ -12,7 +12,7 @@ export const setPassword = password => ({
 export const setEmail = email =>({
 	type : 'USER_SET_EMAIL',
 	email,
-})
+});
 
 export const setIsLoggedIn = isLoggedIn => ({
 	type: 'USER_SET_IS_LOGGED_IN',
@@ -27,16 +27,15 @@ export const setLoadingState = loadingState => ({
 export const setCart = cart => ({
 	type: 'USER_SET_CART',
 	cart,
-})
+});
 
 export const setActiveUsers = activeUsers =>({
 	type:'SET_ACTIVE_USERS',
 	activeUsers,
-})
+});
 export const setNotifications = notification =>({
 	type:'SET_ACTION_NOTIFICATION',
 	notification
-})
 });
 
 export const setUserType = userType => ({

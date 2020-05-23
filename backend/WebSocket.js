@@ -25,7 +25,6 @@ client.subscribe('myPubSubChannel');
 
 let itemViews = {};
 
-
 const broadcastMessage = (message) =>{
 wss.clients.forEach((client)=>{
     if(client.readyState===WebSocket.OPEN){
@@ -33,14 +32,12 @@ wss.clients.forEach((client)=>{
     }
 })
 }
-const broadcastNewNote = (id) => {
-   // notes.push(id);
-   // console.log(views)
+const broadcastNewNote = (messageObject) => {
 
-    
     broadcastMessage({
-        type:'UPDATE_COUNT',
-        id,       
+        type:messageObject.type,
+        id : messageObject.id,
+        views : messageObject.views,
     });
 };
 
@@ -52,10 +49,11 @@ wss.on('connection',(ws)=>{// ws represents a single connection to a single tab
     
     //event 2 message   
     ws.on('message',(message)=>{
+    console.log(message); //incoming from client
     const messageObject=JSON.parse(message);
+
     switch(messageObject.type){
         case 'UPDATE_COUNT':
-            
             if(itemViews.hasOwnProperty(messageObject.id)){
                 itemViews[messageObject.id] += 1;
             } else {
@@ -68,21 +66,23 @@ wss.on('connection',(ws)=>{// ws represents a single connection to a single tab
         case 'DECREASE_COUNT':
             
             if(itemViews.hasOwnProperty(messageObject.id)){
-                itemViews[messageObject.id] -= 1;
+                 itemViews[messageObject.id] -= 1;
             }
             messageObject.views = itemViews[messageObject.id];
             broadcastMessage(messageObject);
+            break;
+
         default:
             console.log('message type not supported');
     }
     });
 
 
-ws.on('close',()=>{
-    console.log('closed');
-    
-});
+    ws.on('close',()=>{
+        console.log('closed');
+        
+    });
 
-ws.on('error',(e)=>{
-})
+    ws.on('error',(e)=>{
+    })
 })
