@@ -22,6 +22,7 @@ const Home = ({
 							<p className="welcomeTitle">
 								{`Welcome ${user}!`}
 							</p>
+						
 						</div>
 					</div>
 					

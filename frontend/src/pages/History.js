@@ -42,7 +42,23 @@ const History = ({
         <h2>Welcome to Purchase history</h2>
         {loadingState === 'error' && <b>User name or password incorrect</b>}
         <button onClick={() => dispatch(displayReceipts())}>History</button>
-        {receipts.map(txt => <p>{txt}</p>)} 
+        <center>
+        <table>
+         <tbody>
+           {
+                receipts.map((numList,i) =>(
+                   <tr key={i}>
+                    {
+                      numList.map((num,j)=>
+                         <td key={j}>       {num}</td>
+                      )
+                    }
+                   </tr>
+                ))
+           }
+         </tbody>
+       </table>
+       </center>
         </div>
     )
 }

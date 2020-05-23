@@ -13,7 +13,11 @@ import Checkout from './pages/Checkout';
 import History from './pages/History';
 
 
-const App = ({ isLoggedIn, dispatch }) => {
+
+const App = ({ isLoggedIn, dispatch, userType }) => {
+  let seller = false;
+
+  if(userType == 'Seller') { seller = true; }
   return (
     <div className="App">
       <Navbar variant='light' bg='light' expand='sm'>
@@ -25,10 +29,18 @@ const App = ({ isLoggedIn, dispatch }) => {
               <Link to='/cart' className='nav-link'>Cart</Link>
 
               {isLoggedIn ?
-                <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link> :
+               (<Nav>
+               <Link to="/History" className='nav-link'>History</Link>
+               <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link>
+             </Nav>)
+               :
                 (<Nav><Link to="/login" className='nav-link'>Login</Link>
-                  <Link to="/signup" className='nav-link'>Sign up</Link></Nav>)
+                  <Link to="/signup" className='nav-link'>Sign up</Link>
+                </Nav>)
               }
+              { seller &&
+                 <Link to="/additem" className='nav-link'>Add item</Link>
+              }     
             </Nav>
           </Navbar.Collapse>
         </div>
@@ -40,15 +52,16 @@ const App = ({ isLoggedIn, dispatch }) => {
         <Route path='/item' component={Item} />
         <Route path='/cart' component={Cart} />
         <Route path='/checkout' component={Checkout} />
-        <Route path="/" component={Home} />
-      
+  
+        <Route path="/" component={Home} />  
       </Switch>
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.userReducer.isLoggedIn
+  isLoggedIn: state.userReducer.isLoggedIn,
+  userType: state.userReducer.userType
 })
 
 export default connect(mapStateToProps)(App);

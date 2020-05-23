@@ -1,7 +1,5 @@
 const express = require('express');
-const KafkaProducer = require('./KafkaProducer.js');
-const producer = new KafkaProducer('email');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectID } = require('mongodb');
 const app = express();
 const port = 3006;
 
@@ -28,7 +26,7 @@ const db=client.db(dbName);
 app.post('/api/receipts/get', (req,res) => {
       db.collection('finalUserInfo')
         .findOne({
-            email:req.body.email
+            userId:req.body.userId
         })
         .then(doc =>{
             res.send(doc.receipts);
@@ -46,32 +44,26 @@ app.post('/api/receipts/create',(req,res)=>{
     let items_purchased=[];
     items_purchased.push(req.body.items);
     let receipt = [];
-    //console.log(req.body);
     receipt.push(receipt_id,date,totalPrice,items_purchased);
     db.collection('finalUserInfo')
     .findOne({
-        email:req.body.email
+        userId:req.body.userId
     })
     .then(doc=>{
         if(doc.receipts){
             db.collection('finalUserInfo')
             .updateOne(
                 {
-                    email:req.body.email},
+                    userId:req.body.userId},
                 {
                     $push: { "receipts":receipt}
                 }
                 )
-             .then(()=>{
-              
-              console.log('Email of the receipt will be sent');
-              //console.log(receipt);
-              producer.send(req.body);
-              res.send('Receipt saved');
-               
-             }
+             .then(
+                 res.send('Receipt saved')
             )
-              .catch(e=>{
+            
+             .catch(e=>{
                res.status(404).send('error404');
              }
              ) 
@@ -79,15 +71,13 @@ app.post('/api/receipts/create',(req,res)=>{
         else{
              db.collection('finalUserInfo')
               .updateOne(
-                {email:req.body.email},
+                {userId:req.body.userId},
                 {
                     $set: { "receipts":receipt}
                 }
                 )
-             .then(() =>{
-              console.log('Email of the receipt will be sent');
-              producer.send(req.body);
-              res.send('Receipt saved');               
+             .then(doc =>{
+                 res.send('Receipt saved');
              })
              .catch(e=>{
                res.status(404).send('error');
@@ -98,7 +88,5 @@ app.post('/api/receipts/create',(req,res)=>{
    
 });
 
-producer.connect(() => {
-  app.listen(port);
-   });
+  app.listen(port, () => console.log(` Listening on port ${port}!`));
 });
