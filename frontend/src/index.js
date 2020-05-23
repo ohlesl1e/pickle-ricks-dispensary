@@ -9,18 +9,40 @@ import rootReducer from './redux/reducers/rootReducer';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
-
+import {setViews} from './redux/actions/itemActions'
+import {setNotifications} from './redux/actions/userActions'
 const store = createStore(rootReducer, applyMiddleware(thunk));
+const ws= new WebSocket('ws://localhost:4000');
+
+
+
+ws.onclose=()=>{
+  console.log('connection closed');
+}
+ws.onmessage =(message) =>{
+
+  const messageObject = JSON.parse(message.data);
+  console.log(message);
+  switch(messageObject.type){
+    case 'UPDATE_COUNT':
+      //handle if message type is update user
+      //store.dispatch(setViews(messageObject.active))
+      break;
+    case 'NOTIFICATION':
+      store.dispatch(setNotifications(messageObject.notification))
+
+  
+}}
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <App />
+      <App ws={ws}/>
     </Router>
   </Provider>,
   document.getElementById('root')
 );
-
+export default store;
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA

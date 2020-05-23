@@ -1,17 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux'; // step 1
 import ItemGrid from './ItemGrid';
-import { getInventory } from '../redux/actions/inventoryAction';
-import { displayReceipts} from '../redux/actions/receiptActions';
+import { getInventory, getInventorySeller } from '../redux/actions/inventoryAction';
+
 
 const Home = ({
 	isLoggedIn,
 	user,
 	receipt,
 	receipts,
+	userType,
+	email,
 	dispatch,
+	ws
 }) => { 
-	dispatch(getInventory());
+	console.log('home called');
+	console.log(userType);
+	if(userType === 'Seller'){
+		dispatch(getInventorySeller(email));
+	} else {
+		dispatch(getInventory());
+	}
 	return (
 		<div>
 			<h2>Shop</h2>
@@ -29,7 +38,7 @@ const Home = ({
 				</div>
 			)}
 			{!isLoggedIn && (<p> Please Log in or Sign up</p>)}
-		
+			<ItemGrid ws={ws} />
 		</div>
 	);
 };
@@ -39,9 +48,8 @@ const mapStateToProps = state => ({
 	isLoggedIn: state.userReducer.isLoggedIn,
 	user: state.userReducer.user,
 	password: state.userReducer.password,
-	receipts: state.receiptReducer.receipts,
-	receipt: state.receiptReducer.receipt
-
+	userType: state.userReducer.userType,
+	email: state.userReducer.email,
 });
 
 // step 3 connect mapping function to component

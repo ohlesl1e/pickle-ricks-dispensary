@@ -6,20 +6,31 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Item from './pages/Item';
-import { logout } from './redux/actions/userActions';
+import { logout, setIsLoggedIn, setEmail, setUserType, setUser } from './redux/actions/userActions';
 import Cart from './pages/Cart';
 import { Nav, Navbar } from 'react-bootstrap';
 import Checkout from './pages/Checkout';
 import History from './pages/History';
+import AddItem from './pages/AddItem';
+import { retrieveUser, retrieveType, retrieveEmail } from './cookies';
 
 
-
-const App = ({ isLoggedIn, dispatch, userType }) => {
+const App = ({ isLoggedIn, dispatch, userType, ws, notification }) => {
   let seller = false;
+  React.useEffect(() => {
+    const user = retrieveUser()
+    if (user) {
+      dispatch(setEmail(retrieveEmail()))
+      dispatch(setUserType(retrieveType()))
+      dispatch(setUser(user))
+      dispatch(setIsLoggedIn(true))
+    }
+  }, [])
 
-  if(userType == 'Seller') { seller = true; }
+  if(userType === 'Seller') { seller = true; }
   return (
     <div className="App">
+      <div>{notification}</div>
       <Navbar variant='light' bg='light' expand='sm'>
         <div className='container'>
           <Navbar.Toggle />
@@ -29,11 +40,8 @@ const App = ({ isLoggedIn, dispatch, userType }) => {
               <Link to='/cart' className='nav-link'>Cart</Link>
 
               {isLoggedIn ?
-               (<Nav>
-               <Link to="/History" className='nav-link'>History</Link>
-               <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link>
-             </Nav>)
-               :
+ 
+                <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link> :
                 (<Nav><Link to="/login" className='nav-link'>Login</Link>
                   <Link to="/signup" className='nav-link'>Sign up</Link>
                 </Nav>)
@@ -49,11 +57,11 @@ const App = ({ isLoggedIn, dispatch, userType }) => {
         <Route path="/History" component={History} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        <Route path='/item' component={Item} />
+        <Route path='/item' render={()=><Item ws={ws}/>}/>
         <Route path='/cart' component={Cart} />
         <Route path='/checkout' component={Checkout} />
-  
-        <Route path="/" component={Home} />  
+        <Route path="/" render={()=><Home ws={ws}/>} />
+        <Route path="/additem" component={AddItem} />
       </Switch>
     </div>
   );
@@ -61,6 +69,7 @@ const App = ({ isLoggedIn, dispatch, userType }) => {
 
 const mapStateToProps = (state) => ({
   isLoggedIn: state.userReducer.isLoggedIn,
+  notification:state.userReducer.notification,
   userType: state.userReducer.userType
 })
 

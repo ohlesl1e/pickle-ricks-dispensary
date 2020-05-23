@@ -1,4 +1,5 @@
 import { setReceipts } from "./receiptActions";
+import { deleteCookie, saveUser, saveType, saveEmail } from "../../cookies";
 
 export const setUser = user => ({
 	type: 'USER_SET_USER',
@@ -12,7 +13,7 @@ export const setPassword = password => ({
 export const setEmail = email =>({
 	type : 'USER_SET_EMAIL',
 	email,
-})
+});
 
 export const setIsLoggedIn = isLoggedIn => ({
 	type: 'USER_SET_IS_LOGGED_IN',
@@ -27,7 +28,21 @@ export const setLoadingState = loadingState => ({
 export const setCart = cart => ({
 	type: 'USER_SET_CART',
 	cart,
-})
+});
+
+export const setActiveUsers = activeUsers =>({
+	type:'SET_ACTIVE_USERS',
+	activeUsers,
+});
+export const setNotifications = notification =>({
+	type:'SET_ACTION_NOTIFICATION',
+	notification
+});
+
+export const setUserType = userType => ({
+	type: 'USER_SET_USERTYPE',
+	userType,
+});
 
 export const login = () => (dispatch, getState) => {
 	//console.log('login function');
@@ -48,10 +63,15 @@ export const login = () => (dispatch, getState) => {
 		.then(data => {
 			//console.log('here');
 			if (data.valid) {
+				console.log(data);
 				dispatch(setUser(data.userName));
 				dispatch(setPassword(''));
 				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
+        dispatch(setUserType(data.userType))
+        saveUser(data.userName)
+        saveEmail(userEmail)
+        saveType(data.userType)
 			} else {
 				dispatch(setLoadingState('error'));
 			}
@@ -66,6 +86,9 @@ export const logout = () => (dispatch, getState) => {
 	dispatch(setEmail(''));
 	dispatch(setReceipts([]));
 	dispatch(setCart([]))
+	dispatch(setNotifications(''))
+  deleteCookie()
+
 };
 
 export const create = () => (dispatch, getState) => {
@@ -76,6 +99,7 @@ export const create = () => (dispatch, getState) => {
 	const userName = getState().userReducer.user;
 	const userPassword = getState().userReducer.password;
 	const useremail= getState().userReducer.email;
+	const userType = getState().userReducer.userType;
 	if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(useremail)){
 	    dispatch(setLoadingState('Not'))
 	}
@@ -84,7 +108,7 @@ export const create = () => (dispatch, getState) => {
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ userId: userName, password: userPassword, email: useremail}),
+		body: JSON.stringify({ userId: userName, password: userPassword, email: useremail, userType: userType}),
 	}
 	fetch(url, requestOptions)
 		.then(res => res.json())
@@ -139,10 +163,12 @@ export const completeTransaction = () => (dispatch, getState) => {
 	const email = getState().userReducer.email;
 	const url = '/api/receipts/create';
 	const cart = getState().userReducer.cart;
-	console.log(cart);
-	console.log(email);
+	//console.log(cart);
+	//console.log(email);
 	const jsonCart = [];
+	console.log(cart);
 	cart.forEach(element => {
+		console.log(element);
 		jsonCart.push({title : element.item.title , quantity : element.amount})
 	});
 	
@@ -150,9 +176,9 @@ export const completeTransaction = () => (dispatch, getState) => {
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type' : 'application/json'},
-		body: JSON.stringify({receipt_id : '22',
-								date : Date.now(),
-								price: '$22.22',
+		body: JSON.stringify({receipt_id : Date.now(),
+								date : Date(),
+								price: cart.totalprice,
 								items: jsonCart	,
 								email: email
 		})

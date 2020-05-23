@@ -5,6 +5,14 @@ import { ListGroup, Container, Image, Button } from 'react-bootstrap'
 import { deleteFromCart } from '../redux/actions/userActions'
 
 const Cart = ({ cart, dispatch }) => {
+
+    let total = 0;
+    cart.forEach(element => {
+        total += element.item.price * element.amount;
+    });
+    
+    cart.totalprice = total;   
+
     return (
         <div>
             <br />
@@ -24,7 +32,7 @@ const Cart = ({ cart, dispatch }) => {
                                                 style={{ maxWidth: '100px', float: "left", marginRight: '10px' }}
                                             />
                                             {cartItem.item.title}<br />
-                                            Quantity: {cartItem.amount}
+                                            Quantity: {cartItem.amount} 
                                         </span>
                                         <Button
                                             variant='secondary'
@@ -35,6 +43,7 @@ const Cart = ({ cart, dispatch }) => {
                                 )}
 
                             </ListGroup><br/>
+                            Total Price: {total} <br />
                             <Link
                                 role="button"
                                 to="/checkout"> 
