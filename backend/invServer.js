@@ -2,7 +2,7 @@ const express = require('express');
 const { MongoClient, ObjectID } = require('mongodb');
 const app = express();
 const cors = require('cors');
-const port = 3005;
+const port = process.env.PORT || 3005;
 
 var bodyParser = require('body-parser');
 app.use(bodyParser());

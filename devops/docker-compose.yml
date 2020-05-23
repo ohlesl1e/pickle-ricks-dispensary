@@ -30,10 +30,74 @@ services:
     environment: 
         - FRONT_END_HOST=http://frontend:3000
         - WEBSOCKET_HOST=http://websocket:4000/websocket
-        - AUTH_HOST=http://localhost:3001
-        - INV_HOST=http://localhost:3005
-        - RECEIPTS_HOST=http://localhost:3006
-        - UPLOAD_HOST=http://localhost:3002
+        - AUTH_HOST=http://authenticate:3001
+        - INV_HOST=http://inventory:3005
+        - RECEIPTS_HOST=http://receipts:3006
+        - UPLOAD_HOST=http://upload:3002
+  frontend:
+    image : FINAL-PROJECT-PICKLE-RICK/final
+    ports:
+      - "3000:3000"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - webnet 
+  websocket:
+    image : FINAL-PROJECT-PICKLE-RICK/websocket
+    depends_on:
+      - redis
+    ports:
+      - "4000:4000"
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+    networks:
+      - webnet
+    environment:
+      - REDIS_HOST=redis
+  authenticate:
+    image : FINAL-PROJECT-PICKLE-RICK/authenticate
+    ports:
+      - "3001:3001"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - webnet 
+  inventory:
+    image : FINAL-PROJECT-PICKLE-RICK/inventory
+    ports:
+      - "3005:3005"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - webnet
+  receipts:
+    image : FINAL-PROJECT-PICKLE-RICK/receipts
+    ports:
+      - "3006:3006"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - webnet
+  upload:
+    image : FINAL-PROJECT-PICKLE-RICK/upload
+    ports:
+      - "3002:3002"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - webnet        
   kafka:
     image : wurstmeister/kafka
     ports:

@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
-const port = 3002;
+const port = process.env.PORT || 3002;
 
 
 const app = express();

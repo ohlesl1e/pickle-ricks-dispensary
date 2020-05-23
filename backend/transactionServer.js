@@ -3,7 +3,7 @@ const KafkaProducer = require('./KafkaProducer.js');
 const producer = new KafkaProducer('email');
 const { MongoClient } = require('mongodb');
 const app = express();
-const port = 3006;
+const port = process.env.PORT || 3006;
 const redis=require('redis');
 const clientr=redis.createClient();
 
