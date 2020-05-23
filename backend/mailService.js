@@ -38,7 +38,8 @@ consumer.on('message', (message) => {
         text: 'message',
         html: `<p>Thank you for purchasing: </p></br>
                 <p>${itemsList}</p>
-                <p>For the total price of 1 billion dollars`,
+                <p>For the total price of ${info.price} dollars on ${info.date}</p><br/>
+                <p>Your receipt id is ${info.receipt_id}`
 
     }
     
