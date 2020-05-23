@@ -52,17 +52,17 @@ export const login = () => (dispatch, getState) => {
 	fetch(url, requestOptions)
 		.then(res => res.json())
 		.then(data => {
-			//console.log('here');
+			console.log('here');
 			if (data.valid) {
 				console.log(data);
 				dispatch(setUser(data.userName));
 				dispatch(setPassword(''));
 				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
-        dispatch(setUserType(data.userType))
-        saveUser(data.userName)
-        saveEmail(userEmail)
-        saveType(data.userType)
+				dispatch(setUserType(data.userType))
+				saveUser(data.userName)
+				saveEmail(userEmail)
+				saveType(data.userType)
 			} else {
 				dispatch(setLoadingState('error'));
 			}
@@ -103,9 +103,11 @@ export const create = () => (dispatch, getState) => {
 		.then(res => res.json())
 		.then(data => {
 			if (data.valid) {
-				dispatch(setUser(''));
+				dispatch(setUser(userName));
 				dispatch(setPassword(''));
+				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
+				dispatch(setUserType(userType))
 			} else {
 				dispatch(setLoadingState('error'));
 			}
