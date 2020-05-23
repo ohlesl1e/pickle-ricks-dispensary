@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 	loadingState: 'init',
 	cart: [],
 	notification:'',
+	userType: "Buyer",
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -50,6 +51,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
 				   ...state,
 				   notification:action.notification,
 			   }
+		case 'USER_SET_USERTYPE':
+			return {
+				...state,
+				userType: action.userType,
+			};
 		default:
 			return state;
 	}
