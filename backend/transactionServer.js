@@ -43,11 +43,12 @@ app.post('/api/receipts/create',(req,res)=>{
     let receipt_id= req.body.receipt_id;
     let date= req.body.date;
     let totalPrice= req.body.price;
-    let items_purchased=[];
-    items_purchased.push(req.body.items);
+    let items_purchased = req.body.items;
+    //items_purchased.push(req.body.items);
     let receipt = [];
     //console.log(req.body);
     receipt.push(receipt_id,date,totalPrice,items_purchased);
+    console.log(items_purchased);
     db.collection('finalUserInfo')
     .findOne({
         email:req.body.email
@@ -55,22 +56,26 @@ app.post('/api/receipts/create',(req,res)=>{
     .then(doc=>{
         if(doc.receipts){
             db.collection('finalUserInfo')
-              .updateOne(
-                  {
-                    email:req.body.email
-                  },
-                  {
-                    $push: { "receipts":receipt}}
+            .updateOne(
+                {
+                    email:req.body.email},
+                {
+                    $push: { "receipts":receipt} 
+                }
                 )
-              .then(()=>{
-                console.log('Email of the receipt will be sent');
-                //console.log(receipt);
-                producer.send(req.body);
-                res.send('Receipt saved');
-              })
-              .catch(e=>{
-               res.status(404).send('error404');
-             })}
+             .then(()=>{
+              
+              console.log('Email of the receipt will be sent');
+              //console.log(receipt);
+              producer.send(req.body);
+              res.send('Receipt saved');
+               
+             }
+            )
+            .catch(e=>{
+              res.status(404).send('error404');
+            }) 
+        }
         else{
              db.collection('finalUserInfo')
               .updateOne(
@@ -86,10 +91,28 @@ app.post('/api/receipts/create',(req,res)=>{
              })
              .catch(e=>{
                res.status(404).send('error');
-             }
-             ) 
-    }
+             }) 
+      }     
     });
+    items_purchased.forEach( (item) => {
+      console.log('in the loop');
+      console.log(item);
+      db.collection('Inventory')
+      .findOne({ title : item.title})
+      .then(doc => {
+        if(doc) { console.log(doc);}
+        
+        db.collection('Inventory')
+        .updateOne(
+          {title : item.title},
+          { $set : {stock : `${doc.stock - item.quantity}`}}
+        )
+        
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+    })
    
 });
 

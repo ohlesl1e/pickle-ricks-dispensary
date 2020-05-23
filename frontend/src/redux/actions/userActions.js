@@ -152,10 +152,12 @@ export const completeTransaction = () => (dispatch, getState) => {
 	const email = getState().userReducer.email;
 	const url = '/api/receipts/create';
 	const cart = getState().userReducer.cart;
-	console.log(cart);
-	console.log(email);
+	//console.log(cart);
+	//console.log(email);
 	const jsonCart = [];
+	console.log(cart);
 	cart.forEach(element => {
+		console.log(element);
 		jsonCart.push({title : element.item.title , quantity : element.amount})
 	});
 	
@@ -163,9 +165,9 @@ export const completeTransaction = () => (dispatch, getState) => {
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type' : 'application/json'},
-		body: JSON.stringify({receipt_id : '22',
-								date : Date.now(),
-								price: '$22.22',
+		body: JSON.stringify({receipt_id : Date.now(),
+								date : Date(),
+								price: cart.totalprice,
 								items: jsonCart	,
 								email: email
 		})
