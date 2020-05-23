@@ -49,10 +49,10 @@ client.connect(err => {
 
     const sellerMap = {}
     for (const item of req.body.items) {
-      if (!sellerMap[item.seller]) {
-        sellerMap[item.seller] = [item]
+      if (!sellerMap[item.sellerName]) {
+        sellerMap[item.sellerName] = [item]
       } else {
-        sellerMap[item.seller].push(item)
+        sellerMap[item.sellerName].push(item)
       }
     }
 
@@ -62,18 +62,18 @@ client.connect(err => {
         amount += element.subtotal
       });
       db.collection('finalUserInfo').findOne({
-        userId: element.seller
+        userId: element.sellerName
       }).then(doc => {
         if (doc.receipts) {
           db.collection('finalUserInfo').updateOne({
-            userId: element.seller
+            userId: element.sellerName
           }, {
             $push: { 'receipts': [receipt_id, date, amount] }
           })
         } else {
           db.collection('finalUserInfo')
             .updateOne(
-              { userId: element.seller },
+              { userId: element.sellerName },
               {
                 $set: { "receipts": [[receipt_id, date, amount]] }
               }
