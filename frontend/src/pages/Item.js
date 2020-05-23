@@ -8,7 +8,8 @@ import store from '../index'
 import { Link } from 'react-router-dom'
 
 
-const Item = ({ item, dispatch, views }) => {
+const Item = ({ item, dispatch, ws }) => {
+    const [views, setViews] = React.useState('')
     const [added, setAdded] = React.useState(false)
     const [amount, setAmount] = React.useState(1)
     const addedToCart = () => {
@@ -21,11 +22,41 @@ const Item = ({ item, dispatch, views }) => {
     for (let i = 0; i < item.stock; i++) {
         option.push(<option value={i + 1} key={i}>{i + 1}</option>)
     }
+    
+    ws.onmessage =(message) =>{
+        const messageObject = JSON.parse(message.data);
+        switch(messageObject.type){
+          case 'UPDATE_COUNT':
+            
+            if(item._id == messageObject.id.id){
+                setViews(messageObject.id.views);
+            }
+             break;
+            
+        case 'DECREASE_COUNT':
+            
+            if(item._id == messageObject.id.id){
+                setViews(messageObject.id.views);
+            }
+
+
+    }};
+
+    const leavePage = () => {
+
+        console.log('inside leave page')
+        const dataToSend = {
+            type:'DECREASE_COUNT',
+            id: item._id,
+                };
+        ws.send(JSON.stringify(dataToSend));
+    }
+
     return (
         <div>
             <br />
             <Container style={{ textAlign: 'left' }}>
-                <Link className='btn btn-primary' to='/' style={{marginBottom:'10px'}}>Back</Link>
+                <Link className='btn btn-primary' to='/' onClick={() => {leavePage()}} style={{marginBottom:'10px'}}>Back</Link>
                 <Row>
                     <Col sm='4'><Image src={require(`./../../../backend/images/${item.picture}`)} fluid='true' /></Col>
                     <Col>
@@ -45,6 +76,7 @@ const Item = ({ item, dispatch, views }) => {
                                 {' '}<Button onClick={() => {
                                     dispatch(addToCart(amount))
                                     addedToCart()
+                                    leavePage()
                                 }}>Add to cart</Button>{added && <p style={{ color: 'red' }}>Item added</p>}
                             </Card.Body>
                         </Card>
@@ -57,7 +89,6 @@ const Item = ({ item, dispatch, views }) => {
 
 const mapStateToProps = (state) => ({
     item: state.itemReducer.item,
-    views: state.itemReducer.views
 })
 
 export default connect(mapStateToProps)(Item)
