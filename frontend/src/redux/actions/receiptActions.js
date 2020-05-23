@@ -4,12 +4,12 @@ export const setReceipt = receipt => ({
   });
   
   export const setReceipts = receipts => ({
-    type: 'RECEIPTS_SET_RECEIPTS',
+    type: 'RECEIPTS_SET_RECEIPTS', 
     receipts,
   });
 
   export const displayReceipts = () => (dispatch, getState) => {
-    const userName = getState().userReducer.user;
+    const userName = getState().userReducer.email;
     const pass= getState().userReducer.password;
     const url = '/api/receipts/get';
 
@@ -22,6 +22,7 @@ export const setReceipt = receipt => ({
       .then(res => res.json())
       .then(data => {
         dispatch(setReceipts(data));
+        console.log(data);
       })
       .catch(console.log);
   };

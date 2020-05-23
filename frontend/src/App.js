@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Item from './pages/Item';
 import { logout, setIsLoggedIn, setEmail, setUserType, setUser } from './redux/actions/userActions';
+import {displayReceipts} from  './redux/actions/receiptActions'
 import Cart from './pages/Cart';
 import { Nav, Navbar } from 'react-bootstrap';
 import Checkout from './pages/Checkout';
@@ -37,7 +38,7 @@ const App = ({ isLoggedIn, dispatch, userType }) => {
             <Nav>
               <Link to="/" className='nav-link'>Home</Link>
               <Link to='/cart' className='nav-link'>Cart</Link>
-
+<Link to ="/history" className='nav-link' onClick={() => dispatch(displayReceipts())}>History</Link>
               {isLoggedIn ?
                 <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link> :
                 (<Nav><Link to="/login" className='nav-link'>Login</Link>

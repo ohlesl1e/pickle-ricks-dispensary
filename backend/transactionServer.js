@@ -26,12 +26,18 @@ client.connect(err => {
 const db=client.db(dbName);
 
 app.post('/api/receipts/get', (req,res) => {
+  console.log('in')
+  console.log(req.body.userId)
       db.collection('finalUserInfo')
+
         .findOne({
-            email:req.body.email
+            email:req.body.userId
+            
         })
         .then(doc =>{
+          console.log(doc);
             res.send(doc.receipts);
+            console.log('in')
         })
         .catch(e=>{
         console.log(e);

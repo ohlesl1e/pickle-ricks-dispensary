@@ -1,16 +1,16 @@
 const DEFAULT_STATE = {
-  note : '',
-  notes : []
+  receipt : '',
+  receipts : []
 };
 
-const notesReducer = (state = DEFAULT_STATE, action) => {
+const receiptReducer = (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case 'RECEIPT_SET_NOTE':
         return {
           ...state,
           receipt: action.receipt,
         };
-      case 'RECEIPTS_SET_NOTES':
+      case 'RECEIPTS_SET_RECEIPTS':
         return {
           ...state,
           receipts: action.receipts,
@@ -20,4 +20,4 @@ const notesReducer = (state = DEFAULT_STATE, action) => {
   }
 };
 
-export default notesReducer;
+export default receiptReducer;
