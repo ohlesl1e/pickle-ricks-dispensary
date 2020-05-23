@@ -2,11 +2,13 @@ const initialState = {
     item: {
         id: '',
         title: '',
-        seller: '',
+        sellerName: '',
+        sellerEmail: '',
         desctiption: '',
         stock: '',
         picture: '',
         views: '1',
+        price: '',
     }
 }
 

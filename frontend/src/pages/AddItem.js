@@ -34,7 +34,7 @@ const onFileUpload = () => {
     }) 
   }; 
 
-const addToDB = (user, email, itemName, description, numItems) => {
+const addToDB = (user, email, itemName, description, numItems, price) => {
 
     const requestOptions = {
         
@@ -44,7 +44,8 @@ const addToDB = (user, email, itemName, description, numItems) => {
             email,
             description,
             stock: numItems,
-            picture: `${selectedFile.name}`
+            picture: `${selectedFile.name}`,
+            price: price
         
     }
      
@@ -67,6 +68,7 @@ const AddItem = ({
     const [itemName, setItemName] = React.useState('');
     const [itemDescription, setItemDescription] = React.useState('');
     const [numItems, setNumItems] = React.useState('');
+    const [price, setPrice] = React.useState('');
     
 	return (
 		<div> 
@@ -78,7 +80,8 @@ const AddItem = ({
                 <input type="text" placeholder="New Item Name" onChange={ e => setItemName(e.target.value)}/>
                 <input type="text" placeholder="New Item description"  onChange={ e => setItemDescription(e.target.value)}/>
                 <input type="text" placeholder="Number of items"  onChange={ e => setNumItems(e.target.value)}/>
-                <button onClick={() => {onFileUpload(); addToDB(user, email, itemName, itemDescription, numItems);}}> 
+                <input type="text" placeholder="price"  onChange={ e => setPrice(e.target.value)}/>
+                <button onClick={() => {onFileUpload(); addToDB(user, email, itemName, itemDescription, numItems, price);}}> 
                   Upload! 
                 </button> 
             </div> 

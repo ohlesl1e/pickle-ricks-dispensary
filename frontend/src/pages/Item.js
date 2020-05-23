@@ -55,7 +55,7 @@ const Item = ({ item, dispatch, ws }) => {
     for (let i = 0; i < item.stock; i++) {
         option.push(<option value={i + 1} key={i}>{i + 1}</option>)
     }
-
+                    
     return (
         <div>
             <br />

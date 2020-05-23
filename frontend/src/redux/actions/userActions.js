@@ -1,4 +1,5 @@
 import { setReceipts } from "./receiptActions";
+import { deleteCookie, saveUser, saveType, saveEmail } from "../../cookies";
 
 export const setUser = user => ({
 	type: 'USER_SET_USER',
@@ -67,7 +68,10 @@ export const login = () => (dispatch, getState) => {
 				dispatch(setPassword(''));
 				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
-				dispatch(setUserType(data.userType))
+        dispatch(setUserType(data.userType))
+        saveUser(data.userName)
+        saveEmail(userEmail)
+        saveType(data.userType)
 			} else {
 				dispatch(setLoadingState('error'));
 			}
@@ -83,6 +87,8 @@ export const logout = () => (dispatch, getState) => {
 	dispatch(setReceipts([]));
 	dispatch(setCart([]))
 	dispatch(setNotifications(''))
+  deleteCookie()
+
 };
 
 export const create = () => (dispatch, getState) => {
@@ -157,10 +163,12 @@ export const completeTransaction = () => (dispatch, getState) => {
 	const email = getState().userReducer.email;
 	const url = '/api/receipts/create';
 	const cart = getState().userReducer.cart;
-	console.log(cart);
-	console.log(email);
+	//console.log(cart);
+	//console.log(email);
 	const jsonCart = [];
+	console.log(cart);
 	cart.forEach(element => {
+		console.log(element);
 		jsonCart.push({title : element.item.title , quantity : element.amount})
 	});
 	
@@ -168,9 +176,9 @@ export const completeTransaction = () => (dispatch, getState) => {
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type' : 'application/json'},
-		body: JSON.stringify({receipt_id : '22',
-								date : Date.now(),
-								price: '$22.22',
+		body: JSON.stringify({receipt_id : Date.now(),
+								date : Date(),
+								price: cart.totalprice,
 								items: jsonCart	,
 								email: email
 		})

@@ -1,3 +1,5 @@
+import userReducer from "../reducers/userReducer";
+
 export const setItem = item => ({
     type: 'ITEM_SET_ITEM',
     item
@@ -19,6 +21,23 @@ export const getInventory = () => (dispatch) => {
         .then( res => res.json())
         .then( data => {
             dispatch(setInventory(data));
+        })
+        .catch(console.log);
+
+};
+
+export const getInventorySeller = (email) => (dispatch) => {
+    console.log(email);
+    const url = '/api/inventory/seller/get';
+    const requestbody = {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json'},
+        body: JSON.stringify({ sellerEmail : email })
+        }
+    fetch(url, requestbody)
+        .then( res => res.json())
+        .then( data => {
+            dispatch(setInventory(data))
         })
         .catch(console.log);
 

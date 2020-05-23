@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 
 const Checkout = ({ cart, dispatch, shippingAddress }) => {
+    console.log(cart);
     return (
         <div>
             <br />
@@ -22,11 +23,12 @@ const Checkout = ({ cart, dispatch, shippingAddress }) => {
                                         style={{ maxHeight: '100px', float: "left", marginRight: '10px' }}
                                     />
                                     {cartItem.item.title}<br />
-                        Quantity: {cartItem.amount}
+                        Quantity: {cartItem.amount} 
                                 </span>
                             </ListGroup.Item>
                         )}
                     </ListGroup><br/>
+                    <div><span>Total Price: {cart.totalprice}</span></div>
                     <div>
                         Shipping Address: {" "}
                     </div><br/>

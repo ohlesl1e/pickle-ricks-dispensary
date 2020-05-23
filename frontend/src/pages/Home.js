@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'; // step 1
 import ItemGrid from './ItemGrid';
-import { getInventory } from '../redux/actions/inventoryAction';
+import { getInventory, getInventorySeller } from '../redux/actions/inventoryAction';
 
 
 const Home = ({
@@ -9,10 +9,18 @@ const Home = ({
 	user,
 	receipt,
 	receipts,
+	userType,
+	email,
 	dispatch,
 	ws
 }) => { 
-	dispatch(getInventory());
+	console.log('home called');
+	console.log(userType);
+	if(userType === 'Seller'){
+		dispatch(getInventorySeller(email));
+	} else {
+		dispatch(getInventory());
+	}
 	return (
 		<div>
 			<h2>Shop</h2>
@@ -39,6 +47,7 @@ const mapStateToProps = state => ({
 	user: state.userReducer.user,
 	password: state.userReducer.password,
 	userType: state.userReducer.userType,
+	email: state.userReducer.email,
 });
 
 // step 3 connect mapping function to component

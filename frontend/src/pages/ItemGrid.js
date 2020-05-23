@@ -27,7 +27,8 @@ const ItemGrid = ({ inventory, dispatch, ws }) => {
                                     <Card.Img src={require('../../../backend/images/' + item.picture)} fluid='true' />
                                     <Card.Body>
                                         <Card.Title>{item.title}</Card.Title>
-                                        <Card.Text>from {item.seller}</Card.Text>
+                                        <Card.Text>from {item.sellerName}</Card.Text>
+                                        <Card.Text>price: ${item.price}</Card.Text>
                                     </Card.Body>
                                 </Card>
                             </Link>
