@@ -20,7 +20,7 @@ const App = ({ isLoggedIn, dispatch, userType, ws, notification }) => {
   if(userType == 'Seller') { seller = true; }
   return (
     <div className="App">
-      <div>notification{notification}</div>
+      <div>{notification}</div>
       <Navbar variant='light' bg='light' expand='sm'>
         <div className='container'>
           <Navbar.Toggle />

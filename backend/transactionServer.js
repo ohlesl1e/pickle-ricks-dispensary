@@ -65,7 +65,7 @@ app.post('/api/receipts/create',(req,res)=>{
                 }
                 )
              .then(()=>{
-              clientr.publish('myPubSubChannel',`${items_purchased} have been purchased`)
+              clientr.publish('myPubSubChannel',`${items_purchased[0]} have been purchased`)
               console.log('Email of the receipt will be sent');
               //console.log(receipt);
               producer.send(req.body);
