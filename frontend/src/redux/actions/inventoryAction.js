@@ -18,8 +18,8 @@ export const getInventory = () => (dispatch) => {
     const url = '/api/inventory/get';
 
     fetch(url)
-        .then( res => res.json())
-        .then( data => {
+        .then(res => res.json())
+        .then(data => {
             dispatch(setInventory(data));
         })
         .catch(console.log);
@@ -31,12 +31,12 @@ export const getInventorySeller = (email) => (dispatch) => {
     const url = '/api/inventory/seller/get';
     const requestbody = {
         method: 'POST',
-        headers: { 'Content-Type' : 'application/json'},
-        body: JSON.stringify({ sellerEmail : email })
-        }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sellerEmail: email })
+    }
     fetch(url, requestbody)
-        .then( res => res.json())
-        .then( data => {
+        .then(res => res.json())
+        .then(data => {
             dispatch(setInventory(data))
         })
         .catch(console.log);

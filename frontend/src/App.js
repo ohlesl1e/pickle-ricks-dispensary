@@ -27,7 +27,7 @@ const App = ({ isLoggedIn, dispatch, userType, ws, notification }) => {
     }
   }, [])
 
-  if(userType === 'Seller') { seller = true; }
+  if (userType === 'Seller') { seller = true; }
   return (
     <div className="App">
       <div>{notification}</div>
@@ -37,18 +37,16 @@ const App = ({ isLoggedIn, dispatch, userType, ws, notification }) => {
           <Navbar.Collapse>
             <Nav>
               <Link to="/" className='nav-link'>Home</Link>
-              <Link to='/cart' className='nav-link'>Cart</Link>
-
+              {userType === 'Buyer' && <Link to='/cart' className='nav-link'>Cart</Link>}
               {isLoggedIn ?
- 
                 <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link> :
                 (<Nav><Link to="/login" className='nav-link'>Login</Link>
                   <Link to="/signup" className='nav-link'>Sign up</Link>
                 </Nav>)
               }
-              { seller &&
-                 <Link to="/additem" className='nav-link'>Add item</Link>
-              }     
+              {seller &&
+                <Link to="/additem" className='nav-link'>Add item</Link>
+              }
             </Nav>
           </Navbar.Collapse>
         </div>
@@ -57,10 +55,10 @@ const App = ({ isLoggedIn, dispatch, userType, ws, notification }) => {
         <Route path="/History" component={History} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        <Route path='/item' render={()=><Item ws={ws}/>}/>
+        <Route path='/item' render={() => <Item ws={ws} />} />
         <Route path='/cart' component={Cart} />
         <Route path='/checkout' component={Checkout} />
-        <Route path="/" render={()=><Home ws={ws}/>} />
+        <Route path="/" render={() => <Home ws={ws} />} />
         <Route path="/additem" component={AddItem} />
       </Switch>
     </div>
@@ -69,7 +67,7 @@ const App = ({ isLoggedIn, dispatch, userType, ws, notification }) => {
 
 const mapStateToProps = (state) => ({
   isLoggedIn: state.userReducer.isLoggedIn,
-  notification:state.userReducer.notification,
+  notification: state.userReducer.notification,
   userType: state.userReducer.userType
 })
 

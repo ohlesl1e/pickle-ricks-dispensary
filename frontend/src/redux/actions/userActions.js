@@ -10,8 +10,8 @@ export const setPassword = password => ({
 	type: 'USER_SET_PASSWORD',
 	password,
 });
-export const setEmail = email =>({
-	type : 'USER_SET_EMAIL',
+export const setEmail = email => ({
+	type: 'USER_SET_EMAIL',
 	email,
 });
 
@@ -30,12 +30,12 @@ export const setCart = cart => ({
 	cart,
 });
 
-export const setActiveUsers = activeUsers =>({
-	type:'SET_ACTIVE_USERS',
+export const setActiveUsers = activeUsers => ({
+	type: 'SET_ACTIVE_USERS',
 	activeUsers,
 });
-export const setNotifications = notification =>({
-	type:'SET_ACTION_NOTIFICATION',
+export const setNotifications = notification => ({
+	type: 'SET_ACTION_NOTIFICATION',
 	notification
 });
 
@@ -99,17 +99,17 @@ export const create = () => (dispatch, getState) => {
 	dispatch(reduxEvent); // now redux knows something is happening
 	const userName = getState().userReducer.user;
 	const userPassword = getState().userReducer.password;
-	const useremail= getState().userReducer.email;
+	const useremail = getState().userReducer.email;
 	const userType = getState().userReducer.userType;
-	if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(useremail)){
-	    dispatch(setLoadingState('Not'))
+	if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(useremail)) {
+		dispatch(setLoadingState('Not'))
 	}
-	else{
-	const url = '/api/auth/create';
-	const requestOptions = {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ userId: userName, password: userPassword, email: useremail, userType: userType}),
+	else {
+		const url = '/api/auth/create';
+		const requestOptions = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ userId: userName, password: userPassword, email: useremail, userType: userType }),
 	}
 	fetch(url, requestOptions)
 		.then(res => res.json())
@@ -172,29 +172,35 @@ export const completeTransaction = () => (dispatch, getState) => {
 	console.log(cart);
 	cart.forEach(element => {
 		console.log(element);
-		jsonCart.push({title : element.item.title , quantity : element.amount})
+		jsonCart.push({
+			title: element.item.title,
+			quantity: element.amount,
+			seller: element.item.seller,
+			subtotal: element.item.price * element.amount,
+		})
 	});
-	
+
 
 	const requestOptions = {
 		method: 'POST',
-		headers: { 'Content-Type' : 'application/json'},
-		body: JSON.stringify({receipt_id : Date.now(),
-								date : Date(),
-								price: cart.totalprice,
-								items: jsonCart	,
-								email: email
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({
+			receipt_id: Date.now(),
+			date: Date(),
+			price: cart.totalprice,
+			items: jsonCart,
+			email: email
 		})
 	}
-	
+
 
 	fetch(url, requestOptions)
 		.then(res => res.json())
 		.then(data => {
 			console.log(data);
 		})
-		.catch( (e) => {
+		.catch((e) => {
 			//console.log(e);
 		})
-		
+
 };
