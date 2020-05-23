@@ -48,12 +48,6 @@ app.all('/api/inventory/get', (req, res) => {
   });
 });
 
-app.all('/api/inventory/add', (req, res) => {
-  apiProxy.web(req,res, {
-    target : 'http://localhost:3005',
-  });
-});
-
 app.all('/api/receipts/create', (req, res) => {
   apiProxy.web(req,res ,{
     target: 'http://localhost:3006',
@@ -69,12 +63,6 @@ app.all('/api/receipts/get', (req, res) => {
 app.all('/mail/sendemail', (req, res) => {
   apiProxy.web(req, res , {
     target: 'http"//localhost:3007',
-  });
-});
-
-app.all('/api/uploadfile', (req, res) => {
-  apiProxy.web(req, res, {
-    target: 'http://localhost:3002',
   });
 });
 

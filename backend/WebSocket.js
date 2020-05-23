@@ -23,7 +23,6 @@ client.on('message',(channel,message)=>{
 });
 client.subscribe('myPubSubChannel');
 
-let itemViews = {};
 
 
 const broadcastMessage = (message) =>{
@@ -33,14 +32,17 @@ wss.clients.forEach((client)=>{
     }
 })
 }
-const broadcastNewNote = (id) => {
+const broadcastNewNote = (id,views) => {
    // notes.push(id);
    // console.log(views)
+   active=views+1
+    console.log(active)
 
     
     broadcastMessage({
         type:'UPDATE_COUNT',
-        id,       
+        active,
+        
     });
 };
 
@@ -52,28 +54,16 @@ wss.on('connection',(ws)=>{// ws represents a single connection to a single tab
     
     //event 2 message   
     ws.on('message',(message)=>{
+    console.log(message); //incoming from client
     const messageObject=JSON.parse(message);
+    console.log(messageObject)
     switch(messageObject.type){
         case 'UPDATE_COUNT':
-            
-            if(itemViews.hasOwnProperty(messageObject.id)){
-                itemViews[messageObject.id] += 1;
-            } else {
-                itemViews[messageObject.id] = 1;
-            }
-            messageObject.views = itemViews[messageObject.id];
-            console.log(messageObject);
-            broadcastNewNote(messageObject);
+            console.log('In n')
+            broadcastNewNote(messageObject.id,messageObject.active_users);
             break;
-        case 'DECREASE_COUNT':
-            
-            if(itemViews.hasOwnProperty(messageObject.id)){
-                itemViews[messageObject.id] -= 1;
-            }
-            messageObject.views = itemViews[messageObject.id];
-            broadcastMessage(messageObject);
-        default:
-            console.log('message type not supported');
+            default:
+                console.log('message type not supported');
     }
     });
 

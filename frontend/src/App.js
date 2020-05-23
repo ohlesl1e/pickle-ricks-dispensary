@@ -11,22 +11,12 @@ import Cart from './pages/Cart';
 import { Nav, Navbar } from 'react-bootstrap';
 import Checkout from './pages/Checkout';
 import History from './pages/History';
-import AddItem from './pages/AddItem';
 
 
 const App = ({ isLoggedIn, dispatch,ws,notification}) => {
   return (
     <div className="App">
       <div>notification{notification}</div>
-
-const App = ({ isLoggedIn, dispatch, userType, ws }) => {
-  let seller = false;
-
-
-  if(userType == 'Seller') { seller = true; }
-  return (
-    <div className="App">
-      <div>notification</div>
       <Navbar variant='light' bg='light' expand='sm'>
         <div className='container'>
           <Navbar.Toggle />
@@ -36,15 +26,10 @@ const App = ({ isLoggedIn, dispatch, userType, ws }) => {
               <Link to='/cart' className='nav-link'>Cart</Link>
 
               {isLoggedIn ?
- 
                 <Link id="logout" className='nav-link' onClick={() => dispatch(logout())} to='/'>Logout</Link> :
                 (<Nav><Link to="/login" className='nav-link'>Login</Link>
-                  <Link to="/signup" className='nav-link'>Sign up</Link>
-                </Nav>)
+                  <Link to="/signup" className='nav-link'>Sign up</Link></Nav>)
               }
-              { seller &&
-                 <Link to="/additem" className='nav-link'>Add item</Link>
-              }     
             </Nav>
           </Navbar.Collapse>
         </div>
@@ -57,9 +42,8 @@ const App = ({ isLoggedIn, dispatch, userType, ws }) => {
         <Route path='/cart' component={Cart} />
         <Route path='/checkout' component={Checkout} />
         <Route path="/" render={()=><Home ws={ws}/>} />
-        <Route path="/additem" component={AddItem} />
+      
       </Switch>
-    </div>
     </div>
   );
 }
@@ -67,7 +51,6 @@ const App = ({ isLoggedIn, dispatch, userType, ws }) => {
 const mapStateToProps = (state) => ({
   isLoggedIn: state.userReducer.isLoggedIn,
   notification:state.userReducer.notification,
-  userType: state.userReducer.userType
 })
 
 export default connect(mapStateToProps)(App);

@@ -6,7 +6,7 @@ const initialState = {
         desctiption: '',
         stock: '',
         picture: '',
-        views: '1',
+        views: 1,
     }
 }
 

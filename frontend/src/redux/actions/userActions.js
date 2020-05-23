@@ -28,7 +28,6 @@ export const setCart = cart => ({
 	type: 'USER_SET_CART',
 	cart,
 })
-
 export const setActiveUsers = activeUsers =>({
 	type:'SET_ACTIVE_USERS',
 	activeUsers,
@@ -37,12 +36,6 @@ export const setNotifications = notification =>({
 	type:'SET_ACTION_NOTIFICATION',
 	notification
 })
-});
-
-export const setUserType = userType => ({
-	type: 'USER_SET_USERTYPE',
-	userType,
-});
 
 export const login = () => (dispatch, getState) => {
 	//console.log('login function');
@@ -63,12 +56,10 @@ export const login = () => (dispatch, getState) => {
 		.then(data => {
 			//console.log('here');
 			if (data.valid) {
-				console.log(data);
 				dispatch(setUser(data.userName));
 				dispatch(setPassword(''));
 				dispatch(setIsLoggedIn(true));
 				dispatch(setLoadingState('init'));
-				dispatch(setUserType(data.userType))
 			} else {
 				dispatch(setLoadingState('error'));
 			}
@@ -94,7 +85,6 @@ export const create = () => (dispatch, getState) => {
 	const userName = getState().userReducer.user;
 	const userPassword = getState().userReducer.password;
 	const useremail= getState().userReducer.email;
-	const userType = getState().userReducer.userType;
 	if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(useremail)){
 	    dispatch(setLoadingState('Not'))
 	}
@@ -103,7 +93,7 @@ export const create = () => (dispatch, getState) => {
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ userId: userName, password: userPassword, email: useremail, userType: userType}),
+		body: JSON.stringify({ userId: userName, password: userPassword, email: useremail}),
 	}
 	fetch(url, requestOptions)
 		.then(res => res.json())

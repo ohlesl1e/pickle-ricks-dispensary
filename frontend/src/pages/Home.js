@@ -38,7 +38,6 @@ const mapStateToProps = state => ({
 	isLoggedIn: state.userReducer.isLoggedIn,
 	user: state.userReducer.user,
 	password: state.userReducer.password,
-	userType: state.userReducer.userType,
 });
 
 // step 3 connect mapping function to component

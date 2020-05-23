@@ -8,13 +8,6 @@ module.exports = {
             watch: true,
         },
         {
-            name: "additems",
-            script: "./addItemServer.js",
-            watch: true,
-            ignore_watch: ["node_modules"],
-            watch: true,
-        },
-        {
             name: "inventory",
             script: "./invServer.js",
             watch: true,

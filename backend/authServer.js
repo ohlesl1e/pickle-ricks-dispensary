@@ -49,7 +49,7 @@ client.connect(err => {
           });
         } else {
           console.log('No results. Creating a new user...');
-          var newUser = {userId: req.body.userId, password: req.body.password, email: req.body.email, userType: req.body.userType};
+          var newUser = {userId: req.body.userId, password: req.body.password, email: req.body.email};
           db.collection('finalUserInfo').insertOne(newUser, function(err, res) {
             if(err){
               console.log(err);
@@ -79,7 +79,7 @@ client.connect(err => {
       .then(doc => {
         console.log(doc);
         res.send({
-          valid: doc !== null && doc.password === req.body.password, userName: doc.userId, userType: doc.userType
+          valid: doc !== null && doc.password === req.body.password, userName: doc.userId
         });
       })
       .catch(e => {
