@@ -5,6 +5,8 @@ import {
   setPassword,
   login,
   setEmail,
+  setLoadingState,
+  setIsLoggedIn,
 } from '../redux/actions/userActions';
 import { Redirect } from 'react-router-dom';
 
@@ -16,6 +18,7 @@ const Login = ({
   dispatch,
   email,
 }) => {
+  
 
   if (isLoggedIn) {
     return <Redirect to="/" />;

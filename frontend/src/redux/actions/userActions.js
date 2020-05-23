@@ -61,7 +61,7 @@ export const login = () => (dispatch, getState) => {
 	fetch(url, requestOptions)
 		.then(res => res.json())
 		.then(data => {
-			//console.log('here');
+			console.log('here');
 			if (data.valid) {
 				console.log(data);
 				dispatch(setUser(data.userName));
@@ -85,9 +85,10 @@ export const logout = () => (dispatch, getState) => {
 	dispatch(setPassword(''));
 	dispatch(setEmail(''));
 	dispatch(setReceipts([]));
-	dispatch(setCart([]))
-	dispatch(setNotifications(''))
-	deleteCookie()
+	dispatch(setCart([]));
+	dispatch(setNotifications(''));
+	dispatch(setUserType('Buyer'));
+    deleteCookie();
 
 };
 
@@ -109,21 +110,22 @@ export const create = () => (dispatch, getState) => {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ userId: userName, password: userPassword, email: useremail, userType: userType }),
-		}
-		fetch(url, requestOptions)
-			.then(res => res.json())
-			.then(data => {
-				if (data.valid) {
-					dispatch(setUser(''));
-					dispatch(setPassword(''));
-					dispatch(setLoadingState('init'));
-				} else {
-					dispatch(setLoadingState('error'));
-				}
-			})
-			.catch(console.log);
 	}
-};
+	fetch(url, requestOptions)
+		.then(res => res.json())
+		.then(data => {
+			if (data.valid) {
+				dispatch(setUser(userName));
+				dispatch(setPassword(''));
+				dispatch(setIsLoggedIn(true));
+				dispatch(setLoadingState('init'));
+				dispatch(setUserType(userType))
+			} else {
+				dispatch(setLoadingState('error'));
+			}
+		})
+		.catch(console.log);
+}};
 
 export const addToCart = amount => (dispatch, getState) => {
 	const cart = getState().userReducer.cart

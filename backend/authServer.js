@@ -35,7 +35,7 @@ client.connect(err => {
     }
     db.collection('finalUserInfo')
       .findOne({
-        userId: req.body.userId
+        email: req.body.email
       }, function(err, result){
         if(err) {
           console.log(err);
