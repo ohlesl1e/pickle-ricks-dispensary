@@ -5,6 +5,7 @@ const INITIAL_STATE = {
 	isLoggedIn: false,
 	loadingState: 'init',
 	cart: [],
+	notification:'',
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -44,6 +45,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
 				  ...state,
 				  activeUsers:action.activeUsers,
 				}
+		 case 'SET_ACTION_NOTIFICATION':
+			   return{
+				   ...state,
+				   notification:action.notification,
+			   }
 		default:
 			return state;
 	}

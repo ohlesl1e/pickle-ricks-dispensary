@@ -32,6 +32,10 @@ export const setActiveUsers = activeUsers =>({
 	type:'SET_ACTIVE_USERS',
 	activeUsers,
 })
+export const setNotifications = notification =>({
+	type:'SET_ACTION_NOTIFICATION',
+	notification
+})
 
 export const login = () => (dispatch, getState) => {
 	//console.log('login function');
@@ -70,6 +74,7 @@ export const logout = () => (dispatch, getState) => {
 	dispatch(setEmail(''));
 	dispatch(setReceipts([]));
 	dispatch(setCart([]))
+	dispatch(setNotifications(''))
 };
 
 export const create = () => (dispatch, getState) => {

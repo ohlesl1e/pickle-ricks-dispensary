@@ -13,9 +13,10 @@ import Checkout from './pages/Checkout';
 import History from './pages/History';
 
 
-const App = ({ isLoggedIn, dispatch,ws }) => {
+const App = ({ isLoggedIn, dispatch,ws,notification}) => {
   return (
     <div className="App">
+      <div>notification{notification}</div>
       <Navbar variant='light' bg='light' expand='sm'>
         <div className='container'>
           <Navbar.Toggle />
@@ -48,7 +49,8 @@ const App = ({ isLoggedIn, dispatch,ws }) => {
 }
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.userReducer.isLoggedIn
+  isLoggedIn: state.userReducer.isLoggedIn,
+  notification:state.userReducer.notification,
 })
 
 export default connect(mapStateToProps)(App);

@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import {setViews} from './redux/actions/itemActions'
+import {setNotifications} from './redux/actions/userActions'
 const store = createStore(rootReducer, applyMiddleware(thunk));
 const ws= new WebSocket('ws://localhost:4000');
 
@@ -27,6 +28,9 @@ ws.onmessage =(message) =>{
       //handle if message type is update user
       store.dispatch(setViews(messageObject.active))
       break;
+    case 'NOTIFICATION':
+      store.dispatch(setNotifications(messageObject.notification))
+
   
 }}
 
