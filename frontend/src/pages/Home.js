@@ -12,6 +12,7 @@ const Home = ({
 	userType,
 	email,
 	dispatch,
+	ws
 }) => { 
 	console.log('home called');
 	console.log(userType);
@@ -35,7 +36,7 @@ const Home = ({
 				</div>
 			)}
 			{!isLoggedIn && (<p> Please Log in or Sign up</p>)}
-			<ItemGrid />
+			<ItemGrid ws={ws} />
 		</div>
 	);
 };

@@ -4,6 +4,7 @@ import { ListGroup, Container, Image, Button } from 'react-bootstrap'
 import { completeTransaction } from '../redux/actions/userActions'
 import { Link } from 'react-router-dom'
 
+
 const Checkout = ({ cart, dispatch, shippingAddress }) => {
     console.log(cart);
     return (
@@ -34,7 +35,7 @@ const Checkout = ({ cart, dispatch, shippingAddress }) => {
                     <div>
                         Payment method: {" "}
                     </div><br/>
-                    <Link to='/' ><Button onClick={() => dispatch(completeTransaction())}>Place your order</Button></Link>
+                    <Link to='/' ><Button onClick={() => {dispatch(completeTransaction())}}>Place your order</Button></Link>
                 </div>
                 }
             </Container>

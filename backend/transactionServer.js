@@ -4,6 +4,8 @@ const producer = new KafkaProducer('email');
 const { MongoClient } = require('mongodb');
 const app = express();
 const port = 3006;
+const redis=require('redis');
+const clientr=redis.createClient();
 
 
 var bodyParser = require('body-parser');
@@ -64,11 +66,12 @@ app.post('/api/receipts/create',(req,res)=>{
                 }
                 )
              .then(()=>{
-              
+              clientr.publish('myPubSubChannel',`${items_purchased[0]} have been purchased`)
               console.log('Email of the receipt will be sent');
               //console.log(receipt);
               producer.send(req.body);
               res.send('Receipt saved');
+             
                
              }
             )
