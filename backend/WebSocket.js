@@ -1,12 +1,13 @@
 const WebSocket = require('ws');
+const redis=require('redis');
+
 const options = {
     port:4000,
 }
 const wss= new WebSocket.Server(options)
 const notes = [];
 let active;
-const redis=require('redis');
-const client=redis.createClient();
+const client=redis.createClient( {host: process.env.REDIS_HOST || 'localhost'});
 
 client.on('message',(channel,message)=>{
     wss.clients.forEach((client)=>{

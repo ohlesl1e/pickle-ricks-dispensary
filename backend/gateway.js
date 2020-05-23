@@ -1,94 +1,73 @@
 const express = require('express');
 const httpProxy = require('http-proxy');
+const server = require('server');
+
 const app = express();
-const redis = require('redis');
-//const client = redis.createClient();
-const port = process.env.PORT || 3004;
+const appServer = server.createServer(app)
+const apiProxy = httpProxy.createProxyServer(app);
 
-const apiProxy = httpProxy.createProxyServer();
-
-// Function to increment counter in redis 
-/*
-function incrCounter() {
-  client.incr('myCounter', (err, updatedValue) => {
-    if(err) console.log(err);
-  });
-}
-*/
+const wsProxy = httpProxy.createProxyServer({
+  target: process.env.WEBSOCKET_HOST || 'http://localhost:6000',
+  ws: true,
+});
 
 apiProxy.on('error', (err, req, res) => {
   console.log(err)
   res.status(500).send('Proxy Error');
 });
 
-app.all('/api/auth/authenticate', (req, res) => {
-  //incrCounter();
-  apiProxy.web(req, res, {
-    target: 'http://localhost:3001',
+wsProxy.on('error', (err, req, socket) => {
+  console.log(err);
+  console.log('ws failed');
+  socket.end();
+});
+
+const authHost = process.env.AUTH_HOST || 'http://localhost:3001';
+app.all('/api/auth*', (req, res) => {
+  apiProxy.web(req, res, { 
+    target: authHost
   });
 });
 
-app.all('/api/auth/create', (req, res) => {
-  //incrCounter();
-  apiProxy.web(req, res, {
-    target: 'http://localhost:3001',
-  });
-});
 
-
-app.all('/api/stats/get', (req, res) => {
+const invHost = process.env.INV_HOST || 'http://localhost:3005';
+app.all('/api/inventory*', (req, res) => {
   apiProxy.web(req,res, {
-    target : 'http://localhost:3003',
+    target : invHost,
   });
 });
 
-app.all('/api/inventory/get', (req, res) => {
-  apiProxy.web(req,res, {
-    target : 'http://localhost:3005',
-  });
-});
-
-app.all('/api/inventory/seller/get', (req, res) => {
-  apiProxy.web(req,res, {
-    target: 'http://localhost:3005',
-  });
-});
-
-app.all('/api/inventory/add', (req, res) => {
-  apiProxy.web(req,res, {
-    target : 'http://localhost:3005',
-  });
-});
-
-app.all('/api/receipts/create', (req, res) => {
+const receiptsHost = process.env.RECEIPTS_HOST || 'http://localhost:3006';
+app.all('/api/receipts*', (req, res) => {
   apiProxy.web(req,res ,{
-    target: 'http://localhost:3006',
+    target: receiptsHost,
   });
 });
 
-app.all('/api/receipts/get', (req, res) => {
-  apiProxy.web(req,res ,{
-    target: 'http://localhost:3006',
-  });
-});
 
-app.all('/mail/sendemail', (req, res) => {
-  apiProxy.web(req, res , {
-    target: 'http"//localhost:3007',
-  });
-});
-
+const uploadHost = process.env.UPLOAD_HOST || 'http://localhost:3002'
 app.all('/api/uploadfile', (req, res) => {
   apiProxy.web(req, res, {
-    target: 'http://localhost:3002',
+    target: uploadHost,
   });
 });
 
-app.all("*", (req, res) => {
-  // front end server / react
-  apiProxy.web(req, res, {
-    target: 'http://localhost:3000',
-  });
+const websocketHost = process.env.WEBSOCKET_HOST || 'http://localhost:4000/websocket';
+app.all('/websocket*', (req, res) => {
+  console.log('incoming ws');
+  apiProxy.web(req, res, { target: websocketHost });
 });
 
-app.listen(port, () => console.log(`Gateway on port ${port}!`))
+appServer.on('upgrade', (req, socket, head) => {
+  console.log('upgrade ws here');
+  wsProxy.ws(req, socket, head);
+});
+
+const fronEndHost = process.env.FRONT_END_HOST || 'http://localhost:3000';
+console.log(`Front end proxies to: ${fronEndHost}`);
+app.all('/*', (req, res) => {
+  // for frontend
+  apiProxy.web(req, res, { target: fronEndHost });
+});
+
+app.listen(4000)
