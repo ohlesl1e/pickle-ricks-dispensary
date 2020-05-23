@@ -83,7 +83,7 @@ client.connect(err => {
 
         if (doc !== null) {
           res.send({
-            valid: doc !== null && doc.password === req.body.password && doc.email === req.body.email,
+            valid: doc.password === req.body.password && doc.email === req.body.email,
             userName: doc.userId, 
             userType: doc.userType
           });
@@ -94,16 +94,6 @@ client.connect(err => {
           });
         }
         
-
-
-      //   if(doc !== null) {
-        
-      // } else {
-      //   res.send({
-      //     valid: doc.password === req.body.password, userName: doc.userId, userType: doc.userType
-      //   });
-      // }
-
       })
       .catch(e => {
         console.log(e);

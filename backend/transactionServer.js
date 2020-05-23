@@ -55,27 +55,22 @@ app.post('/api/receipts/create',(req,res)=>{
     .then(doc=>{
         if(doc.receipts){
             db.collection('finalUserInfo')
-            .updateOne(
-                {
-                    email:req.body.email},
-                {
-                    $push: { "receipts":receipt}
-                }
+              .updateOne(
+                  {
+                    email:req.body.email
+                  },
+                  {
+                    $push: { "receipts":receipt}}
                 )
-             .then(()=>{
-              
-              console.log('Email of the receipt will be sent');
-              //console.log(receipt);
-              producer.send(req.body);
-              res.send('Receipt saved');
-               
-             }
-            )
+              .then(()=>{
+                console.log('Email of the receipt will be sent');
+                //console.log(receipt);
+                producer.send(req.body);
+                res.send('Receipt saved');
+              })
               .catch(e=>{
                res.status(404).send('error404');
-             }
-             ) 
-        }
+             })}
         else{
              db.collection('finalUserInfo')
               .updateOne(
