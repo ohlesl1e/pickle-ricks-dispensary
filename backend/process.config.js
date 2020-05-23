@@ -35,6 +35,13 @@ module.exports = {
             ignore_watch: ["node_modules"],
             watch: true,
         },
+                {
+            name: "websocket",
+            script: "./WebSocket.js",
+            watch: true,
+            ignore_watch: ["node_modules"],
+            watch: true,
+        },
         {
             name: "gateway",
             script: "./gateway.js",

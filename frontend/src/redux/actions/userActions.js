@@ -85,9 +85,10 @@ export const logout = () => (dispatch, getState) => {
 	dispatch(setPassword(''));
 	dispatch(setEmail(''));
 	dispatch(setReceipts([]));
-	dispatch(setCart([]))
-	dispatch(setNotifications(''))
-  deleteCookie()
+	dispatch(setCart([]));
+	dispatch(setNotifications(''));
+	dispatch(setUserType('Buyer'));
+    deleteCookie();
 
 };
 
